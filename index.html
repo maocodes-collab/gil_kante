@@ -3,46 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gil Kante — Développeur Fullstack React/NestJS. Je transforme les idées en produits numériques robustes.">
-  <meta name="theme-color" content="#0040b0">
+  <meta name="description" content="Gil Kante — Développeur Fullstack React/NestJS. Cyber-Urban Afrofuturism Portfolio.">
+  <meta name="theme-color" content="#041A4E">
   <title>Gil Kante — Développeur Fullstack React/NestJS</title>
 
-  <!-- Google Fonts — mêmes polices qu'Epitech.eu -->
+  <!-- Google Fonts — Anton (titres massifs), IBM Plex Mono (technique/cyber) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* =====================================================================
-       VARIABLES & RESET
+       DESIGN SYSTEM & VARIABLES (Cyber-Urban Afrofuturism)
        ===================================================================== */
     :root {
-      --blue-primary:   #0040b0;
-      --blue-secondary: #003088;
-      --blue-accent:    #0a5cf5;
-      --blue-light:     #5c93ff;
-      --blue-lighter:   #eef4ff;
-      --bg-main:        #F8FAFC;
-      --bg-white:       #FFFFFF;
-      --text-primary:   #0F172A;
-      --text-secondary: #475569;
-      --text-muted:     #94A3B8;
-      --border:         #E2E8F0;
-      --shadow-sm:  0 1px 3px rgba(0,64,176,.10);
-      --shadow-md:  0 4px 20px rgba(0,64,176,.14);
-      --shadow-lg:  0 16px 48px rgba(0,64,176,.18);
-      --radius-sm:  8px;
-      --radius-md:  16px;
-      --radius-lg:  24px;
-      --ease:       cubic-bezier(.4,0,.2,1);
-      --transition: all .3s var(--ease);
+      --blue-cobalt:    #0B46B9; /* Couleur maîtresse (dominante 60%) */
+      --blue-nuit:      #041A4E; /* Couleur sombre / contrastes profonds */
+      --white:          #FFFFFF; /* Éléments clairs / circuits / typographies */
+      --gray-concrete:  #E2E8F0; /* Optionnel / fond béton */
+      
+      --bg-main:        var(--blue-nuit);
+      --text-primary:   var(--white);
+      --text-secondary: var(--gray-concrete);
+      --text-muted:     #8FA2C4;
+      
+      --border:         var(--white);
+      --ease:           cubic-bezier(0.19, 1, 0.22, 1);
+      --transition:     all 0.3s var(--ease);
     }
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       background: var(--bg-main);
       color: var(--text-primary);
       line-height: 1.7;
@@ -52,19 +46,40 @@
     img { display:block; max-width:100%; }
 
     /* =====================================================================
-       TYPOGRAPHY UTILITIES
+       TYPOGRAPHY SPECIFIC TO THE THEME
        ===================================================================== */
-    .gradient-text {
-      background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .section-title, .hero-name, h2, h3 {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
     }
 
-    .mono { font-family: 'IBM Plex Mono', monospace; }
+    .section-title {
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .section-label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-cobalt);
+      margin-bottom: 12px;
+    }
+
+    /* Standard section labels for cobalt sections (need white text contrast) */
+    .bg-cobalt .section-label {
+      color: var(--white);
+      opacity: 0.9;
+    }
 
     /* =====================================================================
-       GRID PATTERN — reusable background
+       GRID PATTERNS & UTILITIES
        ===================================================================== */
     .grid-bg {
       position: relative;
@@ -74,24 +89,20 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(0,64,176,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,64,176,.04) 1px, transparent 1px);
-      background-size: 36px 36px;
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
       pointer-events: none;
       z-index: 0;
     }
     .grid-bg > * { position: relative; z-index: 1; }
 
-    /* Dark grid (for blue sections) */
     .grid-bg-dark::before {
       background-image:
-        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+        linear-gradient(rgba(11, 70, 185, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11, 70, 185, 0.08) 1px, transparent 1px);
     }
 
-    /* =====================================================================
-       FLOATING CODE SYMBOLS — decorative
-       ===================================================================== */
     .code-symbols {
       position: absolute;
       inset: 0;
@@ -101,59 +112,31 @@
     }
     .code-symbols span {
       position: absolute;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
       font-weight: 600;
-      color: var(--blue-primary);
-      opacity: .035;
+      color: var(--white);
+      opacity: 0.06;
       user-select: none;
     }
 
-    /* =====================================================================
-       LAYOUT
-       ===================================================================== */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    section { padding: 100px 0; }
-
-    .section-label {
-      display: block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--blue-accent);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: 'Anton', sans-serif;
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-    }
-
-    .section-subtitle {
-      font-size: 17px;
-      color: var(--text-secondary);
-      max-width: 560px;
-      line-height: 1.75;
+    section {
+      padding: 120px 0;
+      position: relative;
     }
 
     .section-header { margin-bottom: 64px; }
 
     .section-divider {
-      width: 48px;
-      height: 3px;
-      background: var(--blue-accent);
-      border-radius: 2px;
+      width: 64px;
+      height: 4px;
+      background: var(--white);
       margin-bottom: 28px;
     }
 
@@ -163,75 +146,77 @@
     .fade-in {
       opacity: 0;
       transform: translateY(28px);
-      transition: opacity .65s var(--ease), transform .65s var(--ease);
+      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
     }
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .delay-1 { transition-delay: .1s; }
-    .delay-2 { transition-delay: .2s; }
-    .delay-3 { transition-delay: .3s; }
-    .delay-4 { transition-delay: .4s; }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
 
     /* =====================================================================
-       BUTTONS
+       BRUTALIST BUTTONS (No border-radius, hard shadows)
        ===================================================================== */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      padding: 14px 28px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
+      gap: 10px;
+      padding: 16px 32px;
+      font-weight: 700;
       font-size: 15px;
       text-decoration: none;
       transition: var(--transition);
-      border: 2px solid transparent;
+      border: 3px solid var(--white);
       cursor: pointer;
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      border-radius: 0 !important;
     }
     .btn svg { flex-shrink: 0; }
 
     .btn-primary {
-      background: var(--blue-primary);
-      color: #fff;
-      border-color: var(--blue-primary);
+      background: var(--white);
+      color: var(--blue-nuit);
     }
     .btn-primary:hover {
-      background: var(--blue-secondary);
-      border-color: var(--blue-secondary);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      background: var(--blue-cobalt);
+      color: var(--white);
+      transform: translate(-4px, -4px);
+      box-shadow: 6px 6px 0px var(--white);
     }
 
     .btn-outline {
       background: transparent;
-      color: var(--blue-primary);
-      border-color: var(--blue-primary);
+      color: var(--white);
     }
     .btn-outline:hover {
-      background: var(--blue-primary);
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      background: var(--white);
+      color: var(--blue-nuit);
+      transform: translate(-4px, -4px);
+      box-shadow: 6px 6px 0px var(--blue-cobalt);
     }
 
     /* =====================================================================
-       NAV
+       NAVBAR (Cyber Dark Theme)
        ===================================================================== */
     #navbar {
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(248,250,252,.92);
+      background: rgba(4, 26, 78, 0.9);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow .3s var(--ease);
+      border-bottom: 2px solid var(--white);
+      transition: var(--transition);
     }
-    #navbar.scrolled { box-shadow: var(--shadow-sm); }
+    #navbar.scrolled {
+      background: var(--blue-nuit);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
 
     .nav-inner {
       max-width: 1200px;
@@ -240,18 +225,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: 72px;
     }
 
     .nav-logo {
       font-family: 'IBM Plex Mono', monospace;
       font-weight: 700;
-      font-size: 20px;
-      color: var(--blue-primary);
+      font-size: 24px;
+      color: var(--white);
       text-decoration: none;
-      letter-spacing: -0.5px;
+      letter-spacing: -1px;
     }
-    .nav-logo span { color: var(--blue-accent); }
+    .nav-logo span { color: var(--blue-cobalt); }
 
     .nav-links {
       display: flex;
@@ -262,9 +247,9 @@
 
     .nav-links a {
       text-decoration: none;
-      color: var(--text-secondary);
+      color: var(--gray-concrete);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       transition: var(--transition);
       position: relative;
     }
@@ -275,28 +260,28 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--blue-accent);
-      border-radius: 2px;
-      transition: width .3s var(--ease);
+      background: var(--white);
+      transition: width 0.3s var(--ease);
     }
-    .nav-links a:hover { color: var(--blue-primary); }
+    .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
 
     .nav-cta {
-      background: var(--blue-primary) !important;
-      color: #fff !important;
-      padding: 8px 20px;
-      border-radius: var(--radius-sm);
-      font-weight: 600 !important;
+      background: var(--white) !important;
+      color: var(--blue-nuit) !important;
+      padding: 10px 24px;
+      border: 2px solid var(--white);
+      border-radius: 0 !important;
     }
     .nav-cta::after { display: none !important; }
     .nav-cta:hover {
-      background: var(--blue-secondary) !important;
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
+      background: var(--blue-cobalt) !important;
+      color: var(--white) !important;
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px var(--white);
     }
 
-    /* Burger */
+    /* Burger menu icon */
     .burger {
       display: none;
       flex-direction: column;
@@ -304,57 +289,57 @@
       cursor: pointer;
       background: none;
       border: none;
-      padding: 4px;
+      padding: 6px;
     }
     .burger span {
       display: block;
       width: 24px;
-      height: 2px;
-      background: var(--blue-primary);
-      border-radius: 2px;
+      height: 3px;
+      background: var(--white);
       transition: var(--transition);
     }
 
-    /* Mobile menu */
+    /* Mobile Menu Drawer */
     .mobile-nav {
       display: none;
       position: fixed;
-      top: 64px;
+      top: 72px;
       left: 0;
       right: 0;
-      background: var(--bg-white);
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
+      background: var(--blue-nuit);
+      border-bottom: 2px solid var(--white);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       z-index: 999;
-      padding: 16px 24px 24px;
+      padding: 24px;
       flex-direction: column;
-      gap: 4px;
+      gap: 8px;
     }
     .mobile-nav.open { display: flex; }
     .mobile-nav a {
       text-decoration: none;
-      color: var(--text-secondary);
-      font-size: 15px;
-      font-weight: 500;
-      padding: 12px 16px;
-      border-radius: var(--radius-sm);
+      color: var(--gray-concrete);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px 18px;
+      border: 1px solid transparent;
       transition: var(--transition);
     }
     .mobile-nav a:hover {
-      background: var(--blue-lighter);
-      color: var(--blue-primary);
+      background: var(--blue-cobalt);
+      color: var(--white);
+      border-color: var(--white);
     }
 
     /* =====================================================================
-       HERO
+       HERO SECTION (High Impact Cobalt Background)
        ===================================================================== */
     #hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding-top: 64px;
-      background: var(--bg-white);
-      position: relative;
+      padding-top: 100px;
+      padding-bottom: 120px;
+      background: var(--blue-cobalt);
       overflow: hidden;
     }
 
@@ -364,90 +349,84 @@
     #hero .code-symbols span:nth-child(4)  { top:60%; left:7%;  font-size:12px; }
     #hero .code-symbols span:nth-child(5)  { top:72%; left:70%; font-size:13px; }
     #hero .code-symbols span:nth-child(6)  { top:85%; left:40%; font-size:10px; }
-    #hero .code-symbols span:nth-child(7)  { top:5%;  left:88%; font-size:15px; }
-    #hero .code-symbols span:nth-child(8)  { top:50%; left:45%; font-size:11px; }
 
     .hero-inner {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 72px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
       align-items: center;
     }
 
-    /* Badge "disponible" */
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: var(--blue-lighter);
-      color: var(--blue-primary);
+      gap: 10px;
+      background: var(--blue-nuit);
+      color: var(--white);
       font-size: 13px;
-      font-weight: 600;
-      padding: 6px 16px;
-      border-radius: 100px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border: 2px solid var(--white);
       margin-bottom: 24px;
-      border: 1px solid rgba(0,64,176,.25);
     }
     .hero-badge .dot {
-      width: 8px;
-      height: 8px;
-      background: #22c55e;
-      border-radius: 50%;
-      animation: pulse-dot 2s infinite;
+      width: 10px;
+      height: 10px;
+      background: #00FF66;
+      border-radius: 0;
+      animation: pulse-dot 1.5s infinite;
     }
     @keyframes pulse-dot {
-      0%,100% { opacity:1; transform:scale(1); }
-      50%      { opacity:.6; transform:scale(.82); }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
     }
 
     .hero-name {
-      font-family: 'Anton', sans-serif;
-      font-size: clamp(44px, 7vw, 82px);
-      font-weight: 400;
-      line-height: 1.02;
-      margin-bottom: 14px;
-      letter-spacing: .5px;
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: 0.95;
+      margin-bottom: 18px;
+      color: var(--white);
     }
 
     .hero-title {
-      font-size: clamp(16px, 2vw, 21px);
-      font-weight: 500;
-      color: var(--blue-primary);
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 700;
+      color: var(--white);
       margin-bottom: 24px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .hero-title .tag {
-      background: var(--blue-primary);
-      color: #fff;
+      background: var(--blue-nuit);
+      color: var(--white);
+      border: 2px solid var(--white);
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-weight: 500;
+      font-size: 14px;
+      padding: 4px 14px;
+      font-weight: 700;
     }
 
     .hero-tagline {
       font-size: 18px;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      max-width: 500px;
+      color: var(--gray-concrete);
+      line-height: 1.8;
+      max-width: 520px;
       margin-bottom: 44px;
     }
     .hero-tagline strong {
-      color: var(--text-primary);
-      font-weight: 600;
+      color: var(--white);
+      font-weight: 700;
     }
 
     .hero-actions {
       display: flex;
-      gap: 16px;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
-    /* Profile visual */
+    /* CYBERNETIC PROFILE CONTAINER */
     .hero-visual {
       display: flex;
       justify-content: center;
@@ -455,143 +434,217 @@
       position: relative;
     }
 
-    .profile-wrapper {
+    .cyber-profile-container {
       position: relative;
-      width: 360px;
-      height: 360px;
+      width: 420px;
+      height: 420px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Morphing blob shape */
-    .profile-shape {
+    .cyber-circuits-bg {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
-      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-      background: linear-gradient(135deg, var(--blue-lighter) 0%, rgba(0,64,176,.1) 100%);
-      border: 2px solid rgba(0,64,176,.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      animation: morph 9s ease-in-out infinite;
+      z-index: 1;
+      pointer-events: none;
     }
-    @keyframes morph {
-      0%,100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-      25%      { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
-      50%      { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
-      75%      { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+    .circuit-line {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: circuitFlow 6s linear infinite;
+    }
+    .cyber-circuits-bg path:nth-child(2) { animation-delay: 1.5s; }
+    .cyber-circuits-bg path:nth-child(3) { animation-delay: 3s; }
+    .cyber-circuits-bg path:nth-child(4) { animation-delay: 4.5s; }
+
+    @keyframes circuitFlow {
+      0% { stroke-dashoffset: 400; }
+      50% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -400; }
     }
 
-    /*
-      ===================================================
-      PHOTO DE PROFIL
-      Pour ajouter votre photo :
-        1. Supprimez le bloc .profile-placeholder
-        2. Décommentez la balise <img> dans le HTML
-        3. Remplacez le src par le chemin de votre image
-      ===================================================
-    */
-    .profile-photo {
+    .circuit-dot {
+      animation: blink 2s infinite alternate;
+    }
+    @keyframes blink {
+      0% { opacity: 0.3; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Octagonal Shape (STOP Sign aesthetic) */
+    .profile-border-oct {
+      width: 320px;
+      height: 320px;
+      background: var(--white);
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+      position: relative;
+      z-index: 2;
+    }
+    .profile-inner-oct {
+      position: absolute;
+      top: 8px; /* Thick White Border */
+      left: 8px;
+      width: calc(100% - 16px);
+      height: calc(100% - 16px);
+      background: var(--blue-cobalt);
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+      overflow: hidden;
+    }
+    .profile-photo-oct {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: grayscale(100%) contrast(140%) brightness(85%);
+      mix-blend-mode: luminosity;
+      display: block;
+      transition: transform 0.4s var(--ease);
+    }
+    .profile-border-oct:hover .profile-photo-oct {
+      transform: scale(1.08);
     }
 
-    .profile-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: var(--blue-primary);
+    /* Ocular Cybernetic Overlay */
+    .cyber-eye-overlay {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
+      z-index: 3;
+      pointer-events: none;
     }
-    .profile-placeholder svg {
-      width: 80px;
-      height: 80px;
-      opacity: .35;
+    .cyber-eye-chip {
+      animation: chipPulse 1.5s infinite alternate;
     }
-    .profile-placeholder p {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      opacity: .4;
+    @keyframes chipPulse {
+      0% { fill: var(--white); filter: drop-shadow(0 0 2px var(--white)); }
+      100% { fill: var(--blue-cobalt); filter: drop-shadow(0 0 8px var(--white)); }
     }
 
-    /* Floating badge beside the profile */
+    /* Pixel Glitch Elements */
+    .cyber-pixels {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .pixel-block {
+      position: absolute;
+      background: var(--white);
+      width: 12px;
+      height: 12px;
+      animation: pixelGlitch 4s infinite steps(2);
+    }
+    .pixel-block.p1 { top: 12%; left: 12%; width: 16px; height: 16px; background: var(--blue-nuit); }
+    .pixel-block.p2 { top: 82%; left: 18%; width: 8px; height: 8px; }
+    .pixel-block.p3 { top: 32%; right: 12%; width: 24px; height: 24px; background: var(--blue-nuit); }
+    .pixel-block.p4 { top: 72%; right: 18%; width: 12px; height: 12px; }
+    .pixel-block.p5 { top: 6%; right: 28%; width: 6px; height: 6px; }
+
+    @keyframes pixelGlitch {
+      0%, 100% { transform: translate(0, 0); opacity: 0.8; }
+      50% { transform: translate(-5px, 5px); opacity: 0.3; }
+    }
+
+    /* Floating Brutalist Badge */
     .profile-badge {
       position: absolute;
-      bottom: 24px;
-      right: -24px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      bottom: 10px;
+      right: -10px;
+      background: var(--blue-nuit);
+      border: 3px solid var(--white);
       padding: 12px 18px;
-      box-shadow: var(--shadow-md);
       display: flex;
       align-items: center;
       gap: 12px;
+      z-index: 4;
+      box-shadow: 6px 6px 0px var(--white);
     }
     .profile-badge-icon {
       width: 36px;
       height: 36px;
-      background: var(--blue-lighter);
-      border-radius: 10px;
+      background: var(--blue-cobalt);
+      border: 2px solid var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .profile-badge-icon svg { color: var(--blue-accent); }
-    .profile-badge-label { font-size: 13px; font-weight: 700; color: var(--blue-primary); }
+    .profile-badge-icon svg { color: var(--white); }
+    .profile-badge-label { font-size: 13px; font-weight: 700; color: var(--white); }
     .profile-badge-sub   { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
-    /* Code snippet decoration */
     .hero-snippet {
       position: absolute;
-      top: -8px;
+      top: -15px;
       left: -40px;
-      background: var(--blue-primary);
-      color: rgba(255,255,255,.75);
+      background: var(--blue-nuit);
+      color: var(--white);
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.7;
-      padding: 12px 16px;
-      border-radius: 12px;
+      padding: 14px 20px;
+      border: 2px solid var(--white);
       white-space: pre;
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 6px 6px 0px var(--white);
+      z-index: 4;
     }
 
     /* =====================================================================
-       ABOUT
+       SVG DIVIDER SHAPES (Melting Paint Drips)
        ===================================================================== */
-    #about { background: var(--bg-main); }
+    .cyber-dripping-divider {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      overflow: hidden;
+      line-height: 0;
+      z-index: 10;
+    }
+    .cyber-dripping-divider svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* =====================================================================
+       ABOUT SECTION (Deep Blue Background, Interactive Pixel Afro)
+       ===================================================================== */
+    #about {
+      background: var(--blue-nuit);
+    }
 
     .about-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 80px;
-      align-items: start;
+      align-items: center;
     }
 
     .about-text p {
-      color: var(--text-secondary);
+      color: var(--gray-concrete);
       font-size: 16px;
       line-height: 1.85;
       margin-bottom: 20px;
     }
     .about-text p strong {
-      color: var(--text-primary);
-      font-weight: 600;
+      color: var(--white);
+      font-weight: 700;
     }
 
+    /* Brutalist Quote block */
     .about-quote {
-      background: var(--blue-primary);
-      color: #fff;
+      background: var(--blue-cobalt);
+      border: 3px solid var(--white);
+      color: var(--white);
       padding: 28px 32px;
-      border-radius: var(--radius-md);
       margin-top: 36px;
       position: relative;
+      box-shadow: 6px 6px 0px var(--white);
     }
     .about-quote::before {
       content: '"';
@@ -600,12 +653,12 @@
       position: absolute;
       top: -12px;
       left: 22px;
-      opacity: .18;
+      opacity: 0.15;
       line-height: 1;
       pointer-events: none;
     }
     .about-quote p {
-      color: rgba(255,255,255,.88);
+      color: var(--white);
       font-size: 15px;
       line-height: 1.75;
       font-style: italic;
@@ -616,58 +669,94 @@
       margin-top: 14px;
       font-style: normal;
       font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      color: rgba(255,255,255,.5);
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--gray-concrete);
+      opacity: 0.8;
     }
 
-    /* Stats cards */
-    .about-stats {
+    /* INTERACTIVE SCROLLER PIXEL ART */
+    .about-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .pixel-art-interactive {
+      width: 320px;
+      height: 320px;
+      position: relative;
+    }
+    .pixel-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(12, 1fr);
+      gap: 4px;
+      width: 100%;
+      height: 100%;
+    }
+    .grid-pixel {
+      background: transparent;
+      transition: background-color 0.2s ease, transform 0.1s ease, opacity 0.1s ease;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .grid-pixel.active {
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Brutalist 4-Column Stats Grid */
+    .about-stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 80px;
     }
 
     .stat-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      background: var(--blue-cobalt);
+      border: 3px solid var(--white);
       padding: 28px 22px;
+      position: relative;
+      overflow: hidden;
       transition: var(--transition);
+      box-shadow: 6px 6px 0px rgba(0,0,0,0.4);
     }
     .stat-card:hover {
-      border-color: rgba(0,64,176,.3);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-4px);
+      transform: translate(-4px, -4px);
+      box-shadow: 10px 10px 0px var(--white);
     }
     .stat-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--blue-lighter);
-      border-radius: 10px;
+      width: 44px;
+      height: 44px;
+      background: var(--blue-nuit);
+      border: 2px solid var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 16px;
     }
-    .stat-icon svg { color: var(--blue-accent); }
+    .stat-icon svg { color: var(--white); }
     .stat-num {
-      font-size: 38px;
-      font-weight: 900;
-      color: var(--blue-primary);
+      font-family: 'Anton', sans-serif;
+      font-size: 44px;
+      font-weight: 400;
+      color: var(--white);
       line-height: 1;
       margin-bottom: 6px;
     }
     .stat-label {
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-weight: 500;
+      font-size: 12px;
+      color: var(--gray-concrete);
+      font-weight: 600;
       line-height: 1.4;
+      text-transform: uppercase;
     }
 
     /* =====================================================================
-       SKILLS
+       SKILLS SECTION (High Contrast Cobalt Background)
        ===================================================================== */
-    #skills { background: var(--bg-white); }
+    #skills {
+      background: var(--blue-cobalt);
+    }
 
     .skills-grid {
       display: grid;
@@ -675,45 +764,80 @@
       gap: 28px;
     }
 
-    .skill-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+    /* Cards System with hover-drawing circuit borders */
+    .skill-card, .exp-card, .project-card {
+      background: var(--blue-nuit);
+      border: 3px solid rgba(255, 255, 255, 0.15);
       padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
       transition: var(--transition);
     }
-    .skill-card:hover {
-      border-color: rgba(0,64,176,.3);
-      box-shadow: var(--shadow-md);
+
+    .card-circuit-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.97);
+      transition: opacity 0.3s ease, transform 0.3s var(--ease);
+    }
+    .card-circuit-overlay svg {
+      width: 100%;
+      height: 100%;
+    }
+    .card-circuit-path {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: stroke-dashoffset 0.6s var(--ease);
+    }
+
+    .skill-card:hover, .exp-card:hover, .project-card:hover {
+      transform: translateY(-6px);
+      border-color: transparent;
+      box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    .skill-card:hover .card-circuit-overlay,
+    .exp-card:hover .card-circuit-overlay,
+    .project-card:hover .card-circuit-overlay {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .skill-card:hover .card-circuit-path,
+    .exp-card:hover .card-circuit-path,
+    .project-card:hover .card-circuit-path {
+      stroke-dashoffset: 0;
     }
 
     .skill-card-header {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
     }
     .skill-card-icon {
       width: 46px;
       height: 46px;
-      border-radius: 12px;
+      border: 2px solid var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .skill-card-icon.c1 { background: var(--blue-primary); }
-    .skill-card-icon.c2 { background: var(--blue-secondary); }
-    .skill-card-icon.c3 { background: #003088; }
-    .skill-card-icon svg { color: #fff; }
+    .skill-card-icon.c1 { background: var(--blue-cobalt); }
+    .skill-card-icon.c2 { background: #082E7A; }
+    .skill-card-icon.c3 { background: #031338; }
+    .skill-card-icon svg { color: var(--white); }
 
     .skill-card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: 18px;
+      color: var(--white);
     }
     .skill-card .cat-desc {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       margin-top: 3px;
     }
@@ -722,66 +846,50 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      position: relative;
+      z-index: 2;
     }
     .tag {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--bg-main);
-      color: var(--text-primary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--gray-concrete);
       transition: var(--transition);
+      border-radius: 0 !important;
     }
     .tag:hover {
-      background: var(--blue-lighter);
-      border-color: rgba(0,64,176,.3);
-      color: var(--blue-primary);
+      background: var(--white);
+      color: var(--blue-nuit);
+      border-color: var(--white);
     }
     .tag.main {
-      background: var(--blue-lighter);
-      border-color: rgba(0,64,176,.3);
-      color: var(--blue-primary);
-      font-weight: 600;
+      background: var(--blue-cobalt);
+      border: 1.5px solid var(--white);
+      color: var(--white);
+      font-weight: 700;
     }
 
     /* =====================================================================
-       EXPERIENCES
+       EXPERIENCES SECTION (Deep Blue Background)
        ===================================================================== */
-    #experiences { background: var(--bg-main); }
+    #experiences {
+      background: var(--blue-nuit);
+    }
 
     .exp-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
+      gap: 28px;
     }
 
     .exp-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 32px 28px;
-      position: relative;
-      overflow: hidden;
-      transition: var(--transition);
-    }
-    .exp-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(180deg, var(--blue-accent), var(--blue-primary));
-      border-radius: 4px 0 0 4px;
-    }
-    .exp-card:hover {
-      box-shadow: var(--shadow-md);
-      border-color: rgba(0,64,176,.25);
-      transform: translateY(-4px);
+      background: var(--blue-cobalt); /* Inverse background contrast */
+      border: 3px solid rgba(255, 255, 255, 0.2);
     }
 
     .exp-card-top {
@@ -789,125 +897,114 @@
       align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
     }
     .exp-icon {
       width: 48px;
       height: 48px;
-      background: var(--blue-lighter);
-      border-radius: 12px;
+      background: var(--blue-nuit);
+      border: 2px solid var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .exp-icon svg { color: var(--blue-primary); }
+    .exp-icon svg { color: var(--white); }
+    
     .exp-date {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
-      color: var(--text-muted);
-      background: var(--bg-main);
-      padding: 4px 10px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
+      font-weight: 700;
+      color: var(--white);
+      background: var(--blue-nuit);
+      padding: 6px 14px;
+      border: 2px solid var(--white);
     }
 
     .exp-card h3 {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: 20px;
+      color: var(--white);
       margin-bottom: 4px;
+      position: relative;
+      z-index: 2;
     }
     .exp-company {
       font-size: 14px;
-      color: var(--blue-accent);
-      font-weight: 600;
+      color: var(--white);
+      opacity: 0.9;
+      font-weight: 700;
       margin-bottom: 14px;
+      position: relative;
+      z-index: 2;
     }
     .exp-card p {
       font-size: 14px;
-      color: var(--text-secondary);
+      color: var(--gray-concrete);
       line-height: 1.75;
       margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
     }
 
-    .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+    }
     .exp-tag {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
-      font-weight: 600;
-      background: var(--blue-primary);
-      color: #fff;
-      padding: 3px 9px;
-      border-radius: 4px;
-      letter-spacing: .3px;
+      font-weight: 700;
+      background: var(--blue-nuit);
+      border: 1px solid var(--white);
+      color: var(--white);
+      padding: 4px 10px;
     }
 
     /* =====================================================================
-       PROJECTS
+       PROJECTS SECTION (High Contrast Cobalt Background)
        ===================================================================== */
-    #projects { background: var(--bg-white); }
+    #projects {
+      background: var(--blue-cobalt);
+    }
 
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .project-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      transition: var(--transition);
-    }
-    .project-card:hover {
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(0,64,176,.25);
-      transform: translateY(-6px);
+      gap: 28px;
     }
 
     .project-header {
-      background: var(--blue-primary);
-      padding: 28px;
+      padding: 24px 0;
       position: relative;
-      overflow: hidden;
-      min-height: 110px;
-      display: flex;
-      align-items: center;
-    }
-    .project-header.alt { background: var(--blue-secondary); }
-    .project-header::after {
-      content: '</>';
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 52px;
-      font-weight: 700;
-      color: rgba(255,255,255,.06);
-      pointer-events: none;
+      z-index: 2;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+      margin-bottom: 20px;
     }
     .project-header h3 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      position: relative;
-      z-index: 1;
+      font-size: 24px;
+      color: var(--white);
     }
     .project-role {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      color: var(--gray-concrete);
+      opacity: 0.8;
       margin-top: 5px;
     }
 
-    .project-body { padding: 24px 28px; }
+    .project-body {
+      position: relative;
+      z-index: 2;
+    }
     .project-body p {
       font-size: 14px;
-      color: var(--text-secondary);
+      color: var(--gray-concrete);
       line-height: 1.75;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .project-footer {
@@ -916,50 +1013,47 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
+      margin-top: 20px;
     }
 
     .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
     .project-stack span {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
-      font-weight: 600;
-      background: var(--bg-main);
-      color: var(--blue-primary);
-      border: 1px solid var(--border);
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 3px 8px;
-      border-radius: 4px;
     }
 
     .project-links { display: flex; gap: 8px; }
     .project-link {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 12px;
-      font-weight: 500;
-      color: var(--blue-accent);
+      font-weight: 700;
+      color: var(--blue-nuit);
       text-decoration: none;
-      padding: 7px 14px;
-      border-radius: var(--radius-sm);
-      background: var(--blue-lighter);
-      border: 1px solid rgba(0,64,176,.25);
+      padding: 8px 16px;
+      background: var(--white);
+      border: 2px solid var(--white);
       transition: var(--transition);
     }
     .project-link:hover {
-      background: var(--blue-accent);
-      color: #fff;
-      border-color: var(--blue-accent);
+      background: var(--blue-cobalt);
+      color: var(--white);
+      border-color: var(--white);
     }
     .project-link svg { flex-shrink: 0; }
 
     /* =====================================================================
-       PHILOSOPHY
+       PHILOSOPHY SECTION (Deep Blue Background)
        ===================================================================== */
     #philosophy {
-      background: var(--blue-primary);
-      position: relative;
-      overflow: hidden;
+      background: var(--blue-nuit);
     }
 
     .philosophy-content {
@@ -971,20 +1065,19 @@
     }
 
     .philosophy-content .section-label {
-      color: rgba(255,255,255,.55);
+      color: var(--white);
+      opacity: 0.8;
     }
     .philosophy-content h2 {
-      font-family: 'Anton', sans-serif;
-      font-size: clamp(28px, 4.5vw, 48px);
-      font-weight: 400;
-      color: #fff;
-      line-height: 1.2;
+      font-size: clamp(32px, 5vw, 54px);
+      color: var(--white);
+      line-height: 1.1;
       margin-bottom: 28px;
     }
     .philosophy-quote {
-      font-size: 19px;
-      color: rgba(255,255,255,.75);
-      line-height: 1.75;
+      font-size: 18px;
+      color: var(--gray-concrete);
+      line-height: 1.8;
       margin-bottom: 60px;
       max-width: 680px;
       margin-left: auto;
@@ -994,100 +1087,108 @@
     .pillars {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 24px;
       text-align: left;
     }
     .pillar {
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius-md);
+      background: var(--blue-cobalt);
+      border: 3px solid var(--white);
       padding: 28px 24px;
       transition: var(--transition);
+      position: relative;
+      overflow: hidden;
     }
     .pillar:hover {
-      background: rgba(255,255,255,.12);
-      transform: translateY(-4px);
+      transform: translateY(-6px);
+      box-shadow: 6px 6px 0px var(--white);
     }
     .pillar-icon {
       width: 44px;
       height: 44px;
-      background: rgba(255,255,255,.1);
-      border-radius: 10px;
+      background: var(--blue-nuit);
+      border: 2px solid var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
     }
-    .pillar-icon svg { color: rgba(255,255,255,.8); }
-    .pillar h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .pillar p  { font-size: 13px; color: rgba(255,255,255,.58); line-height: 1.6; }
+    .pillar-icon svg { color: var(--white); }
+    .pillar h4 { font-family: 'Anton', sans-serif; font-size: 18px; font-weight: 400; color: var(--white); margin-bottom: 8px; position: relative; z-index: 2; }
+    .pillar p  { font-size: 13px; color: var(--gray-concrete); line-height: 1.6; position: relative; z-index: 2; }
 
     /* =====================================================================
-       CONTACT
+       CONTACT SECTION (Deep Blue Background, Cobalt Brutalist Form)
        ===================================================================== */
-    #contact { background: var(--bg-main); }
+    #contact {
+      background: var(--blue-nuit);
+    }
 
     .contact-grid {
       display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 72px;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 80px;
       align-items: start;
     }
 
     .contact-info h3 {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: 24px;
+      color: var(--white);
       margin-bottom: 14px;
     }
     .contact-info p {
       font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.75;
+      color: var(--gray-concrete);
+      line-height: 1.8;
       margin-bottom: 36px;
     }
 
-    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+    .contact-links { display: flex; flex-direction: column; gap: 16px; }
+    
     .contact-link {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px 20px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+      gap: 16px;
+      padding: 18px 24px;
+      background: var(--blue-cobalt);
+      border: 3px solid var(--white);
       text-decoration: none;
-      color: var(--text-primary);
+      color: var(--white);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 700;
       transition: var(--transition);
+      box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
     }
     .contact-link:hover {
-      border-color: var(--blue-accent);
-      color: var(--blue-primary);
-      box-shadow: var(--shadow-sm);
-      transform: translateX(4px);
+      color: var(--blue-nuit);
+      background: var(--white);
+      transform: translateX(6px);
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
     }
     .contact-link-icon {
       width: 40px;
       height: 40px;
-      background: var(--blue-lighter);
-      border-radius: 10px;
+      background: var(--blue-nuit);
+      border: 2px solid var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .contact-link-icon svg { color: var(--blue-primary); }
-    .contact-link-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
-    .contact-link-val  { font-size: 14px; font-weight: 600; }
+    .contact-link:hover .contact-link-icon {
+      background: var(--blue-cobalt);
+    }
+    .contact-link-icon svg { color: var(--white); }
+    .contact-link-meta { font-size: 11px; color: var(--gray-concrete); opacity: 0.8; margin-bottom: 2px; }
+    .contact-link-val  { font-size: 14px; font-weight: 700; }
 
-    /* Form */
+    /* Brutalist Form */
     .contact-form {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      background: var(--blue-cobalt);
+      border: 3px solid var(--white);
       padding: 44px 40px;
+      box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
     }
 
     .form-row {
@@ -1098,29 +1199,29 @@
     .form-group { margin-bottom: 22px; }
     .form-group label {
       display: block;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
       margin-bottom: 8px;
+      text-transform: uppercase;
     }
     .form-group input,
     .form-group textarea {
       width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      border: 2px solid var(--white);
+      border-radius: 0 !important;
       font-size: 15px;
-      font-family: 'Inter', sans-serif;
-      color: var(--text-primary);
-      background: var(--bg-main);
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--white);
+      background: var(--blue-nuit);
       outline: none;
       transition: var(--transition);
     }
     .form-group input:focus,
     .form-group textarea:focus {
-      border-color: var(--blue-accent);
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(0,64,176,.12);
+      background: var(--blue-nuit);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
     }
     .form-group textarea {
       resize: vertical;
@@ -1131,62 +1232,74 @@
       width: 100%;
       justify-content: center;
       font-size: 16px;
+      background: var(--white);
+      color: var(--blue-nuit);
+    }
+    .btn-submit:hover {
+      background: var(--blue-nuit);
+      color: var(--white);
+      box-shadow: 6px 6px 0px var(--white);
     }
 
     .form-success {
       display: none;
       text-align: center;
       padding: 16px;
-      color: #059669;
-      font-weight: 600;
+      background: var(--blue-nuit);
+      border: 2px solid #00FF66;
+      color: #00FF66;
+      font-weight: 700;
       font-size: 15px;
+      margin-top: 16px;
     }
     .form-success.show { display: block; }
 
     /* =====================================================================
-       FOOTER
+       FOOTER (Cobalt Background with Dripping Top Divider)
        ===================================================================== */
     footer {
-      background: var(--blue-primary);
-      padding: 40px 0;
+      background: var(--blue-cobalt);
+      padding: 60px 0 40px;
+      border-top: 3px solid var(--white);
     }
     .footer-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 20px;
     }
     .footer-brand {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 700;
-      color: #fff;
+      color: var(--white);
     }
-    .footer-brand span { color: var(--blue-accent); }
+    .footer-brand span { color: var(--blue-nuit); }
     .footer-tagline {
       font-size: 14px;
       font-style: italic;
-      color: rgba(255,255,255,.45);
+      color: var(--gray-concrete);
     }
     .footer-copy {
       font-size: 13px;
-      color: rgba(255,255,255,.4);
+      color: var(--gray-concrete);
+      opacity: 0.7;
     }
 
     /* =====================================================================
-       SCROLL-TO-TOP
+       SCROLL-TO-TOP BUTTON
        ===================================================================== */
     #scroll-top {
       position: fixed;
       bottom: 32px;
       right: 32px;
-      width: 46px;
-      height: 46px;
-      background: var(--blue-primary);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
+      width: 48px;
+      height: 48px;
+      background: var(--blue-nuit);
+      color: var(--white);
+      border: 3px solid var(--white);
+      border-radius: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1194,29 +1307,34 @@
       opacity: 0;
       pointer-events: none;
       transition: var(--transition);
-      box-shadow: var(--shadow-md);
       z-index: 100;
+      box-shadow: 4px 4px 0px var(--blue-cobalt);
     }
     #scroll-top.show {
       opacity: 1;
       pointer-events: all;
     }
     #scroll-top:hover {
-      background: var(--blue-secondary);
-      transform: translateY(-3px);
+      background: var(--white);
+      color: var(--blue-nuit);
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0px var(--white);
     }
 
     /* =====================================================================
-       RESPONSIVE
+       RESPONSIVE DESIGN ADAPTATIONS
        ===================================================================== */
     @media (max-width: 1024px) {
       .skills-grid { grid-template-columns: 1fr 1fr; }
       .hero-inner  { gap: 40px; }
-      .profile-wrapper { width: 300px; height: 300px; }
+      .cyber-profile-container { width: 340px; height: 340px; }
+      .profile-border-oct { width: 260px; height: 260px; }
+      .profile-inner-oct { top: 6px; left: 6px; width: calc(100% - 12px); height: calc(100% - 12px); }
+      .about-stats-row { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 768px) {
-      section { padding: 72px 0; }
+      section { padding: 80px 0; }
 
       .nav-links { display: none; }
       .burger    { display: flex; }
@@ -1232,17 +1350,15 @@
       .hero-title   { justify-content: center; }
       .hero-snippet { display: none; }
       .profile-badge { right: 0; bottom: -12px; }
-      .profile-wrapper { width: 240px; height: 240px; }
+      .cyber-profile-container { width: 280px; height: 280px; }
+      .profile-border-oct { width: 220px; height: 220px; }
 
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
-      .about-stats { grid-template-columns: 1fr 1fr; }
+      .about-stats-row { grid-template-columns: 1fr 1fr; }
 
       .skills-grid { grid-template-columns: 1fr; }
-
       .exp-grid { grid-template-columns: 1fr; }
-
       .projects-grid { grid-template-columns: 1fr; }
-
       .pillars { grid-template-columns: 1fr; }
 
       .contact-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -1254,20 +1370,31 @@
     @media (max-width: 480px) {
       .container { padding: 0 16px; }
       .contact-form { padding: 28px 20px; }
-      .about-stats { grid-template-columns: 1fr; }
-      .profile-wrapper { width: 210px; height: 210px; }
+      .about-stats-row { grid-template-columns: 1fr; }
+      .cyber-profile-container { width: 240px; height: 240px; }
+      .profile-border-oct { width: 190px; height: 190px; }
     }
   </style>
 </head>
 <body>
 
+<!-- SVG Duotone Filter definition (not currently used directly, grayscale+mix-blend is preferred, but here for system compliance) -->
+<svg style="position: absolute; width: 0; height: 0; pointer-events: none;" width="0" height="0" aria-hidden="true">
+  <filter id="cyber-duotone">
+    <feColorMatrix type="matrix" values="
+      0.04  0  0  0  0.02
+      0.27  0  0  0  0.08
+      0.72  0  0  0  0.72
+      0     0  0  1  0
+    " />
+  </filter>
+</svg>
+
 <!-- =====================================================================
-     NAV
+     NAVBAR
      ===================================================================== -->
 <nav id="navbar" role="navigation" aria-label="Navigation principale">
   <div class="nav-inner">
-
-    <!-- === MODIFIER : remplacez "GK" par vos initiales si besoin === -->
     <a href="#hero" class="nav-logo">GK<span>.</span></a>
 
     <ul class="nav-links" role="list">
@@ -1294,11 +1421,9 @@
 
 
 <!-- =====================================================================
-     HERO
+     HERO SECTION (High Impact Cobalt Background)
      ===================================================================== -->
-<section id="hero" aria-label="Introduction">
-
-  <!-- Floating code symbols (decorative) -->
+<section id="hero" class="bg-cobalt" aria-label="Introduction">
   <div class="code-symbols" aria-hidden="true">
     <span>{ }</span>
     <span>const</span>
@@ -1306,39 +1431,33 @@
     <span>() =&gt;</span>
     <span>async</span>
     <span>return</span>
-    <span>.tsx</span>
-    <span>await</span>
   </div>
 
   <div class="container">
     <div class="hero-inner">
 
-      <!-- LEFT: Text -->
-      <div>
-        <div class="hero-badge fade-in">
+      <!-- LEFT: Hero Details -->
+      <div class="fade-in">
+        <div class="hero-badge">
           <span class="dot"></span>
           Disponible pour de nouveaux projets
         </div>
 
-        <!--
-          === MODIFIER ===
-          Remplacez "Gil" et "Kante" par votre prénom / nom
-        -->
-        <h1 class="hero-name fade-in delay-1">
-          <span class="gradient-text">Gil</span><br>Kante
+        <h1 class="hero-name">
+          Gil<br>Kante
         </h1>
 
-        <div class="hero-title fade-in delay-2">
+        <div class="hero-title">
           Développeur Fullstack
           <span class="tag">React / NestJS</span>
         </div>
 
-        <p class="hero-tagline fade-in delay-3">
+        <p class="hero-tagline">
           Je transforme les <strong>idées en produits numériques robustes</strong> —
           de la première ligne de code jusqu'au déploiement en production.
         </p>
 
-        <div class="hero-actions fade-in delay-4">
+        <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
             Voir mes projets
@@ -1350,33 +1469,53 @@
         </div>
       </div>
 
-      <!-- RIGHT: Profile visual -->
+      <!-- RIGHT: Cybernetic Octogonal Visual -->
       <div class="hero-visual fade-in delay-2">
-
-        <!-- Code snippet decoration -->
         <div class="hero-snippet" aria-hidden="true">const dev = {
   name: "Gil Kante",
   stack: ["React", "NestJS"],
-  status: "available" ✓
+  status: "available"
 };</div>
 
-        <div class="profile-wrapper">
-          <div class="profile-shape">
-            <!--
-              =====================================================
-              PHOTO DE PROFIL — INSTRUCTIONS
-              =====================================================
-              1. Commentez ou supprimez le bloc .profile-placeholder
-              2. Décommentez la ligne <img> ci-dessous
-              3. Remplacez "votre-photo.jpg" par votre chemin image
-              4. Assurez-vous que l'image est carrée ou quasi-carrée
-              =====================================================
-            -->
+        <div class="cyber-profile-container">
+          <!-- Background SVG circuit traces -->
+          <svg class="cyber-circuits-bg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 30 250 L 120 250 L 170 200 L 220 200" stroke="#FFFFFF" stroke-width="2" class="circuit-line"/>
+            <path d="M 470 250 L 380 250 L 330 300 L 280 300" stroke="#FFFFFF" stroke-width="2" class="circuit-line"/>
+            <path d="M 250 30 L 250 120 L 200 170" stroke="#FFFFFF" stroke-width="2" class="circuit-line"/>
+            <path d="M 250 470 L 250 380 L 300 330" stroke="#FFFFFF" stroke-width="2" class="circuit-line"/>
+            <circle cx="30" cy="250" r="5" fill="#FFFFFF" class="circuit-dot"/>
+            <circle cx="470" cy="250" r="5" fill="#FFFFFF" class="circuit-dot"/>
+            <circle cx="200" cy="170" r="5" fill="#FFFFFF" class="circuit-dot"/>
+            <circle cx="300" cy="330" r="5" fill="#FFFFFF" class="circuit-dot"/>
+          </svg>
 
-            <img src="profile.jpg" alt="Gil Kante — Développeur Fullstack React/NestJS" class="profile-photo">
+          <!-- Octagonal border/image container -->
+          <div class="profile-border-oct">
+            <div class="profile-inner-oct">
+              <img src="profile.jpg" alt="Gil Kante — Développeur Fullstack React/NestJS" class="profile-photo-oct">
+              
+              <!-- Eye cybernetic chip overlay -->
+              <svg class="cyber-eye-overlay" viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="220" y="145" width="20" height="20" fill="#FFFFFF" stroke="#041A4E" stroke-width="3" class="cyber-eye-chip"/>
+                <path d="M 230 145 L 230 105 L 190 65" stroke="#FFFFFF" stroke-width="2" />
+                <path d="M 240 155 L 290 155 L 320 185" stroke="#FFFFFF" stroke-width="2" />
+                <circle cx="190" cy="65" r="3" fill="#FFFFFF" />
+                <circle cx="320" cy="185" r="3" fill="#FFFFFF" />
+              </svg>
+            </div>
           </div>
 
-          <!-- Floating badge -->
+          <!-- Glitching floating pixel blocks -->
+          <div class="cyber-pixels" aria-hidden="true">
+            <div class="pixel-block p1"></div>
+            <div class="pixel-block p2"></div>
+            <div class="pixel-block p3"></div>
+            <div class="pixel-block p4"></div>
+            <div class="pixel-block p5"></div>
+          </div>
+
+          <!-- Brutalist floating badge -->
           <div class="profile-badge" aria-hidden="true">
             <div class="profile-badge-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -1391,22 +1530,29 @@
 
     </div>
   </div>
+
+  <!-- Dripping Paint Divider transitioning from Cobalt to Deep Blue -->
+  <div class="cyber-dripping-divider" aria-hidden="true">
+    <svg viewBox="0 0 1600 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C90,0 120,40 140,50 C160,60 180,80 190,110 C192,116 208,116 210,110 C220,80 240,60 260,50 C280,40 310,0 400,0 C490,0 520,30 540,40 C560,50 580,70 590,95 C592,101 608,101 610,95 C620,70 640,50 660,40 C680,30 710,0 800,0 C890,0 920,50 940,60 C960,70 980,90 990,120 C992,126 1008,126 1010,120 C1020,90 1040,70 1060,60 C1080,50 1110,0 1200,0 C1290,0 1320,30 1340,40 C1360,50 1380,60 1390,80 C1392,86 1408,86 1410,80 C1420,60 1440,40 1460,30 C1480,20 1510,0 1600,0 L1600,120 L0,120 Z" fill="#041A4E"></path>
+    </svg>
+  </div>
 </section>
 
 
 <!-- =====================================================================
-     À PROPOS
+     ABOUT SECTION (Deep Blue Background, Interactive Pixel Afro)
      ===================================================================== -->
-<section id="about" aria-labelledby="about-title">
+<section id="about" class="grid-bg grid-bg-dark" aria-labelledby="about-title">
   <div class="container">
     <div class="about-grid">
 
-      <!-- Text -->
+      <!-- Left Column: Biography -->
       <div class="fade-in">
         <span class="section-label">// À propos</span>
         <h2 id="about-title" class="section-title">
           Humain d'abord,<br>
-          <span class="gradient-text">développeur ensuite</span>
+          développeur ensuite
         </h2>
         <div class="section-divider"></div>
 
@@ -1444,41 +1590,67 @@
         </blockquote>
       </div>
 
-      <!-- Stats -->
-      <div class="about-stats fade-in delay-2">
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <div class="stat-num">3+</div>
-          <div class="stat-label">Années d'expérience terrain</div>
+      <!-- Right Column: Scroller Dispersing Pixel Afro Art -->
+      <div class="about-visual fade-in delay-2">
+        <div class="pixel-art-interactive" id="pixel-art-interactive" aria-label="Afrofuturism Pixel Art Interaction">
+          <div class="pixel-grid"></div>
         </div>
+      </div>
 
-        <div class="stat-card">
-          <div class="stat-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
-          </div>
-          <div class="stat-num">8+</div>
-          <div class="stat-label">Projets livrés en production</div>
+    </div>
+
+    <!-- Achievements Statistics Row -->
+    <div class="about-stats-row fade-in delay-3">
+      <div class="stat-card">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="1.5" fill="none" class="card-circuit-path"/>
+          </svg>
         </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="stat-num">4</div>
-          <div class="stat-label">Développeurs accompagnés (team lead)</div>
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Années d'expérience</div>
+      </div>
 
-        <div class="stat-card">
-          <div class="stat-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-          </div>
-          <div class="stat-num">2</div>
-          <div class="stat-label">Formations certifiantes</div>
+      <div class="stat-card">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="1.5" fill="none" class="card-circuit-path"/>
+          </svg>
         </div>
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+        </div>
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Projets en production</div>
+      </div>
 
+      <div class="stat-card">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="1.5" fill="none" class="card-circuit-path"/>
+          </svg>
+        </div>
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Dév. accompagnés</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="1.5" fill="none" class="card-circuit-path"/>
+          </svg>
+        </div>
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Certifications</div>
       </div>
     </div>
   </div>
@@ -1486,18 +1658,18 @@
 
 
 <!-- =====================================================================
-     COMPÉTENCES
+     SKILLS SECTION (High Contrast Cobalt Background)
      ===================================================================== -->
-<section id="skills" class="grid-bg" aria-labelledby="skills-title">
+<section id="skills" class="grid-bg bg-cobalt" aria-labelledby="skills-title">
   <div class="container">
 
     <div class="section-header fade-in">
       <span class="section-label">// Stack technique</span>
       <h2 id="skills-title" class="section-title">
         Ce que je maîtrise,<br>
-        <span class="gradient-text">ce que j'apprends</span>
+        ce que j'apprends
       </h2>
-      <p class="section-subtitle">
+      <p class="section-subtitle" style="color: var(--gray-concrete);">
         Ma stack principale tourne autour de React et NestJS, avec une appétence
         pour les architectures propres et les interfaces qui respirent.
       </p>
@@ -1507,6 +1679,13 @@
 
       <!-- Stack principale -->
       <div class="skill-card fade-in delay-1">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="skill-card-header">
           <div class="skill-card-icon c1">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -1531,13 +1710,20 @@
 
       <!-- Stack secondaire -->
       <div class="skill-card fade-in delay-2">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="skill-card-header">
           <div class="skill-card-icon c2">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
           </div>
           <div>
             <h3>Stack secondaire</h3>
-            <p class="cat-desc">Expériences diverses, vraie polyvalence</p>
+            <p class="cat-desc">Expériences diverses et polyvalence</p>
           </div>
         </div>
         <div class="tags">
@@ -1554,6 +1740,13 @@
 
       <!-- Outils -->
       <div class="skill-card fade-in delay-3">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="skill-card-header">
           <div class="skill-card-icon c3">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
@@ -1577,11 +1770,18 @@
 
     </div>
   </div>
+
+  <!-- Dripping Paint Divider transitioning from Cobalt to Deep Blue -->
+  <div class="cyber-dripping-divider" aria-hidden="true">
+    <svg viewBox="0 0 1600 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C90,0 120,40 140,50 C160,60 180,80 190,110 C192,116 208,116 210,110 C220,80 240,60 260,50 C280,40 310,0 400,0 C490,0 520,30 540,40 C560,50 580,70 590,95 C592,101 608,101 610,95 C620,70 640,50 660,40 C680,30 710,0 800,0 C890,0 920,50 940,60 C960,70 980,90 990,120 C992,126 1008,126 1010,120 C1020,90 1040,70 1060,60 C1080,50 1110,0 1200,0 C1290,0 1320,30 1340,40 C1360,50 1380,60 1390,80 C1392,86 1408,86 1410,80 C1420,60 1440,40 1460,30 C1480,20 1510,0 1600,0 L1600,120 L0,120 Z" fill="#041A4E"></path>
+    </svg>
+  </div>
 </section>
 
 
 <!-- =====================================================================
-     EXPÉRIENCES
+     EXPERIENCES SECTION (Deep Blue Background)
      ===================================================================== -->
 <section id="experiences" aria-labelledby="experiences-title">
   <div class="container">
@@ -1590,7 +1790,7 @@
       <span class="section-label">// Expériences clés</span>
       <h2 id="experiences-title" class="section-title">
         Les expériences qui<br>
-        <span class="gradient-text">m'ont construit</span>
+        m'ont construit
       </h2>
     </div>
 
@@ -1598,6 +1798,13 @@
 
       <!-- Exp 1 : Stage actuel (team lead) -->
       <article class="exp-card fade-in delay-1">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="exp-card-top">
           <div class="exp-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -1624,6 +1831,13 @@
 
       <!-- Exp 2 : Freelance NFC -->
       <article class="exp-card fade-in delay-2">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="exp-card-top">
           <div class="exp-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 13a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7z"/><path d="M16 2v4"/><path d="M8 2v4"/><circle cx="12" cy="13" r="2"/></svg>
@@ -1648,6 +1862,13 @@
 
       <!-- Exp 3 : Digitalisation universitaire -->
       <article class="exp-card fade-in delay-3">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="exp-card-top">
           <div class="exp-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
@@ -1672,6 +1893,13 @@
 
       <!-- Exp 4 : Blockchain Benin / minds3o -->
       <article class="exp-card fade-in delay-4">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="exp-card-top">
           <div class="exp-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
@@ -1683,7 +1911,7 @@
         <p>
           Implication dans le collectif Blockchain Benin, visant à sensibiliser et
           professionnaliser la communauté tech locale en Afrique de l'Ouest. En parallèle,
-          développement et mise en ligne du site <strong>minds3o.com</strong> — une plateforme
+          développement et mise en ligne du site minds3o.com — une plateforme
           numérique active, de bout en bout.
         </p>
         <div class="exp-tags">
@@ -1701,18 +1929,18 @@
 
 
 <!-- =====================================================================
-     PROJETS
+     PROJECTS SECTION (High Contrast Cobalt Background)
      ===================================================================== -->
-<section id="projects" class="grid-bg" aria-labelledby="projects-title">
+<section id="projects" class="grid-bg bg-cobalt" aria-labelledby="projects-title">
   <div class="container">
 
     <div class="section-header fade-in">
       <span class="section-label">// Projets vedettes</span>
       <h2 id="projects-title" class="section-title">
         Ce que j'ai construit,<br>
-        <span class="gradient-text">ce qui tourne en prod</span>
+        ce qui tourne en prod
       </h2>
-      <p class="section-subtitle">
+      <p class="section-subtitle" style="color: var(--gray-concrete);">
         Des projets concrets, livrés, utilisés. Pas juste des démos.
       </p>
     </div>
@@ -1721,6 +1949,13 @@
 
       <!-- Projet 1 : minds3o -->
       <article class="project-card fade-in delay-1">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="project-header">
           <div>
             <h3>minds3o</h3>
@@ -1741,9 +1976,6 @@
               <span>Supabase</span>
             </div>
             <div class="project-links">
-              <!--
-                === MODIFIER : remplacez l'URL par celle de votre site ===
-              -->
               <a href="https://minds3o.com" target="_blank" rel="noopener noreferrer" class="project-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                 Voir le site
@@ -1755,7 +1987,14 @@
 
       <!-- Projet 2 : Notes de frais -->
       <article class="project-card fade-in delay-2">
-        <div class="project-header alt">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="project-header">
           <div>
             <h3>App Notes de Frais</h3>
             <p class="project-role">// Développeur fullstack · Mobile</p>
@@ -1776,9 +2015,6 @@
               <span>JWT</span>
             </div>
             <div class="project-links">
-              <!--
-                === MODIFIER : ajoutez votre lien GitHub ou retirez ce bloc si projet privé ===
-              -->
               <a href="#" class="project-link" aria-label="Voir le code source sur GitHub">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
                 GitHub
@@ -1790,6 +2026,13 @@
 
       <!-- Projet 3 : Carte NFC -->
       <article class="project-card fade-in delay-3">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
         <div class="project-header">
           <div>
             <h3>Système Carte NFC</h3>
@@ -1810,9 +2053,6 @@
               <span>NFC</span>
             </div>
             <div class="project-links">
-              <!--
-                === MODIFIER : ajoutez votre lien GitHub ou démo ===
-              -->
               <a href="#" class="project-link" aria-label="Voir le code source sur GitHub">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
                 GitHub
@@ -1824,7 +2064,14 @@
 
       <!-- Projet 4 : Blockchain Benin -->
       <article class="project-card fade-in delay-4">
-        <div class="project-header alt">
+        <div class="card-circuit-overlay">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            <circle cx="15" cy="15" r="2.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="98" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="project-header">
           <div>
             <h3>Blockchain Benin</h3>
             <p class="project-role">// Contributeur · Associatif &amp; Tech</p>
@@ -1843,9 +2090,6 @@
               <span>Communauté</span>
             </div>
             <div class="project-links">
-              <!--
-                === MODIFIER : ajoutez l'URL Blockchain Benin ===
-              -->
               <a href="#" class="project-link" aria-label="Voir le site Blockchain Benin">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                 Voir
@@ -1857,11 +2101,18 @@
 
     </div>
   </div>
+
+  <!-- Dripping Paint Divider transitioning from Cobalt to Deep Blue -->
+  <div class="cyber-dripping-divider" aria-hidden="true">
+    <svg viewBox="0 0 1600 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C90,0 120,40 140,50 C160,60 180,80 190,110 C192,116 208,116 210,110 C220,80 240,60 260,50 C280,40 310,0 400,0 C490,0 520,30 540,40 C560,50 580,70 590,95 C592,101 608,101 610,95 C620,70 640,50 660,40 C680,30 710,0 800,0 C890,0 920,50 940,60 C960,70 980,90 990,120 C992,126 1008,126 1010,120 C1020,90 1040,70 1060,60 C1080,50 1110,0 1200,0 C1290,0 1320,30 1340,40 C1360,50 1380,60 1390,80 C1392,86 1408,86 1410,80 C1420,60 1440,40 1460,30 C1480,20 1510,0 1600,0 L1600,120 L0,120 Z" fill="#041A4E"></path>
+    </svg>
+  </div>
 </section>
 
 
 <!-- =====================================================================
-     PHILOSOPHIE
+     PHILOSOPHY SECTION (Deep Blue Background)
      ===================================================================== -->
 <section id="philosophy" class="grid-bg grid-bg-dark" aria-labelledby="philosophy-title">
   <div class="container">
@@ -1882,6 +2133,11 @@
       <div class="pillars">
 
         <div class="pillar">
+          <div class="card-circuit-overlay">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            </svg>
+          </div>
           <div class="pillar-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
           </div>
@@ -1890,6 +2146,11 @@
         </div>
 
         <div class="pillar">
+          <div class="card-circuit-overlay">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            </svg>
+          </div>
           <div class="pillar-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
@@ -1898,6 +2159,11 @@
         </div>
 
         <div class="pillar">
+          <div class="card-circuit-overlay">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M 2 15 L 15 15 L 20 2 L 95 2 L 98 5 L 98 90 L 90 98 L 10 98 L 2 90 Z" stroke="#FFFFFF" stroke-width="2" fill="none" class="card-circuit-path"/>
+            </svg>
+          </div>
           <div class="pillar-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
@@ -1912,7 +2178,7 @@
 
 
 <!-- =====================================================================
-     CONTACT
+     CONTACT SECTION (Deep Blue Background, Cobalt Brutalist Form)
      ===================================================================== -->
 <section id="contact" aria-labelledby="contact-title">
   <div class="container">
@@ -1921,13 +2187,13 @@
       <span class="section-label">// Contact</span>
       <h2 id="contact-title" class="section-title">
         Parlons de votre<br>
-        <span class="gradient-text">prochain projet</span>
+        prochain projet
       </h2>
     </div>
 
     <div class="contact-grid">
 
-      <!-- Info -->
+      <!-- Info Column -->
       <div class="fade-in">
         <h3>Je suis à l'écoute</h3>
         <p>
@@ -1936,18 +2202,12 @@
         </p>
 
         <div class="contact-links">
-
-          <!--
-            === MODIFIER : remplacez toutes les valeurs ci-dessous par vos vraies coordonnées ===
-          -->
-
           <a href="mailto:votre.email@exemple.com" class="contact-link" aria-label="Envoyer un email">
             <div class="contact-link-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </div>
             <div>
               <div class="contact-link-meta">Email</div>
-              <!-- Remplacez par votre email -->
               <div class="contact-link-val">votre.email@exemple.com</div>
             </div>
           </a>
@@ -1958,7 +2218,6 @@
             </div>
             <div>
               <div class="contact-link-meta">LinkedIn</div>
-              <!-- Remplacez par votre profil LinkedIn -->
               <div class="contact-link-val">linkedin.com/in/votre-profil</div>
             </div>
           </a>
@@ -1969,18 +2228,15 @@
             </div>
             <div>
               <div class="contact-link-meta">GitHub</div>
-              <!-- Remplacez par votre username GitHub -->
               <div class="contact-link-val">github.com/votre-username</div>
             </div>
           </a>
-
         </div>
       </div>
 
-      <!-- Form -->
+      <!-- Form Column -->
       <div class="fade-in delay-2">
         <form class="contact-form" id="contact-form" novalidate aria-label="Formulaire de contact">
-
           <div class="form-row">
             <div class="form-group">
               <label for="f-name">Votre nom</label>
@@ -2007,20 +2263,6 @@
             Envoyer le message
           </button>
 
-          <!--
-            === INTÉGRATION EMAIL ===
-            Ce formulaire simule l'envoi. Pour un envoi réel :
-            Option A — Formspree (gratuit, 0 backend) :
-              1. Inscrivez-vous sur https://formspree.io
-              2. Ajoutez action="https://formspree.io/f/VOTRE_ID" method="POST" sur le <form>
-              3. Supprimez le JS du submit et laissez le formulaire se soumettre normalement
-
-            Option B — EmailJS (côté client, gratuit jusqu'à 200 emails/mois) :
-              https://www.emailjs.com/
-
-            Option C — Votre propre endpoint NestJS (POST /contact)
-          -->
-
           <div class="form-success" id="form-success" role="alert" aria-live="polite">
             Message reçu — je vous réponds dans les 48h.
           </div>
@@ -2033,12 +2275,18 @@
 
 
 <!-- =====================================================================
-     FOOTER
+     FOOTER (Cobalt Background with Dripping Top Divider)
      ===================================================================== -->
-<footer role="contentinfo">
+<footer role="contentinfo" style="position: relative; overflow: visible;">
+  <!-- Dripping Paint Divider (Flipped to drip down into footer) -->
+  <div class="cyber-dripping-divider" style="top: -69px; bottom: auto;" aria-hidden="true">
+    <svg viewBox="0 0 1600 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C90,0 120,40 140,50 C160,60 180,80 190,110 C192,116 208,116 210,110 C220,80 240,60 260,50 C280,40 310,0 400,0 C490,0 520,30 540,40 C560,50 580,70 590,95 C592,101 608,101 610,95 C620,70 640,50 660,40 C680,30 710,0 800,0 C890,0 920,50 940,60 C960,70 980,90 990,120 C992,126 1008,126 1010,120 C1020,90 1040,70 1060,60 C1080,50 1110,0 1200,0 C1290,0 1320,30 1340,40 C1360,50 1380,60 1390,80 C1392,86 1408,86 1410,80 C1420,60 1440,40 1460,30 C1480,20 1510,0 1600,0 L1600,120 L0,120 Z" fill="#0B46B9"></path>
+    </svg>
+  </div>
+
   <div class="container">
     <div class="footer-inner">
-      <!-- Remplacez "GK" par vos initiales si besoin -->
       <div class="footer-brand">GK<span>.</span></div>
       <div class="footer-tagline">"humain d'abord — code ensuite"</div>
       <div class="footer-copy">© 2026 Gil Kante · Tous droits réservés</div>
@@ -2046,7 +2294,7 @@
   </div>
 </footer>
 
-<!-- Scroll to top -->
+<!-- Scroll to top button -->
 <button id="scroll-top" aria-label="Retour en haut de la page">
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
 </button>
@@ -2057,7 +2305,7 @@
      ===================================================================== -->
 <script>
   /* ------------------------------------------------------------------
-     NAV - scroll shadow + scroll-to-top visibility
+     NAVBAR - scroll shadow + scroll-to-top visibility
   ------------------------------------------------------------------ */
   const navbar    = document.getElementById('navbar');
   const scrollTop = document.getElementById('scroll-top');
@@ -2073,7 +2321,7 @@
   });
 
   /* ------------------------------------------------------------------
-     MOBILE NAV
+     MOBILE NAV DRAWER
   ------------------------------------------------------------------ */
   const burger    = document.getElementById('burger');
   const mobileNav = document.getElementById('mobile-nav');
@@ -2098,20 +2346,20 @@
   });
 
   /* ------------------------------------------------------------------
-     SMOOTH SCROLL (anchor links, accounting for fixed nav)
+     SMOOTH SCROLL (anchor links offset by nav height)
   ------------------------------------------------------------------ */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function (e) {
       const target = document.querySelector(this.getAttribute('href'));
       if (!target) return;
       e.preventDefault();
-      const offset = target.getBoundingClientRect().top + window.scrollY - 64;
+      const offset = target.getBoundingClientRect().top + window.scrollY - 72;
       window.scrollTo({ top: offset, behavior: 'smooth' });
     });
   });
 
   /* ------------------------------------------------------------------
-     FADE-IN on scroll (IntersectionObserver)
+     FADE-IN (Intersection Observer)
   ------------------------------------------------------------------ */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -2125,7 +2373,73 @@
   document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 
   /* ------------------------------------------------------------------
-     CONTACT FORM — validation + simulation d'envoi
+     INTERACTIVE PIXEL AFRO SCROLLER DISPERSION
+  ------------------------------------------------------------------ */
+  const pixelGrid = document.querySelector('.pixel-grid');
+  if (pixelGrid) {
+    const cols = 12;
+    const rows = 12;
+    const totalPixels = cols * rows;
+    
+    // 1 represents silhouette (afro hairstyle and head structure)
+    const pattern = [
+      0,0,0,1,1,1,1,1,1,0,0,0,
+      0,0,1,1,1,1,1,1,1,1,0,0,
+      0,1,1,1,1,1,1,1,1,1,1,0,
+      0,1,1,1,0,0,0,0,1,1,1,0,
+      1,1,1,0,0,1,1,0,0,1,1,1,
+      1,1,1,0,1,1,1,1,0,1,1,1,
+      1,1,1,0,1,1,1,1,0,1,1,1,
+      1,1,1,0,0,1,1,0,0,1,1,1,
+      0,1,1,1,0,0,0,0,1,1,1,0,
+      0,1,1,1,1,1,1,1,1,1,1,0,
+      0,0,1,1,1,1,1,1,1,1,0,0,
+      0,0,0,1,1,1,1,1,1,0,0,0
+    ];
+
+    for (let i = 0; i < totalPixels; i++) {
+      const pixel = document.createElement('div');
+      pixel.classList.add('grid-pixel');
+      if (pattern[i] === 1) {
+        pixel.classList.add('active');
+        // Randomly set colors between white and cobalt blue
+        if (Math.random() > 0.45) {
+          pixel.style.backgroundColor = '#FFFFFF';
+        } else {
+          pixel.style.backgroundColor = '#0B46B9';
+        }
+      }
+      
+      // Random dispersion vector directions
+      pixel.style.setProperty('--rx', (Math.random() - 0.5) * 160 + 'px');
+      pixel.style.setProperty('--ry', (Math.random() - 0.5) * 160 + 'px');
+      pixelGrid.appendChild(pixel);
+    }
+
+    window.addEventListener('scroll', () => {
+      const rect = pixelGrid.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      
+      // Calculate scroller progress centered at viewport
+      const progress = Math.max(0, Math.min(1, (rect.top + rect.height/2) / viewHeight));
+      const scatter = Math.abs(progress - 0.5) * 2; // 0 when fully centered, 1 when out of view
+
+      const pixels = pixelGrid.querySelectorAll('.grid-pixel');
+      pixels.forEach(p => {
+        if (p.classList.contains('active')) {
+          p.style.transform = `translate(calc(var(--rx) * ${scatter}), calc(var(--ry) * ${scatter})) scale(${1 - scatter * 0.5})`;
+          p.style.opacity = 1 - scatter * 0.7;
+        } else {
+          // Subtle movement for empty background pixels
+          p.style.transform = `translate(calc(var(--rx) * ${1 - scatter} * 0.1), calc(var(--ry) * ${1 - scatter} * 0.1))`;
+          p.style.opacity = scatter * 0.15;
+        }
+      });
+    }, { passive: true });
+  }
+
+  /* ------------------------------------------------------------------
+     CONTACT FORM SUBMISSION SIMULATOR
   ------------------------------------------------------------------ */
   const form        = document.getElementById('contact-form');
   const successMsg  = document.getElementById('form-success');
@@ -2151,7 +2465,6 @@
     btn.disabled = true;
     btn.textContent = 'Envoi en cours…';
 
-    // Simulation — remplacez par fetch() vers votre endpoint ou Formspree
     setTimeout(() => {
       form.reset();
       btn.disabled = false;
@@ -2164,7 +2477,7 @@
       ].join('');
       successMsg.classList.add('show');
       setTimeout(() => successMsg.classList.remove('show'), 6000);
-    }, 900);
+    }, 1000);
   });
 </script>
 
