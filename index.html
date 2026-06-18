@@ -1374,6 +1374,120 @@
       .cyber-profile-container { width: 240px; height: 240px; }
       .profile-border-oct { width: 190px; height: 190px; }
     }
+
+    /* =====================================================================
+       ADDITIONAL FINE-TUNING & POLISH (Cyber-Urban details)
+       ===================================================================== */
+    /* Tactical active button states */
+    .btn:active {
+      transform: translate(2px, 2px) !important;
+      box-shadow: 0px 0px 0px transparent !important;
+    }
+    
+    /* Code snippet syntax highlighting */
+    .hero-snippet .token.keyword { color: #00FF66; font-weight: 700; }
+    .hero-snippet .token.key { color: #8FA2C4; }
+    .hero-snippet .token.string { color: #FFFFFF; text-shadow: 0 0 2px rgba(255,255,255,0.5); }
+    .hero-snippet .token.punctuation { color: var(--gray-concrete); }
+
+    /* Custom Terminal-like Form inputs focus indicator */
+    .form-group:focus-within label {
+      color: #00FF66 !important;
+    }
+    .form-group:focus-within label::before {
+      content: '> ';
+      color: #00FF66;
+      font-weight: bold;
+    }
+    .form-group:focus-within input,
+    .form-group:focus-within textarea {
+      border-color: #00FF66 !important;
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.2) !important;
+    }
+
+    /* Custom Cursor design */
+    .custom-cursor {
+      width: 12px;
+      height: 12px;
+      background-color: var(--white);
+      border: 1px solid var(--blue-nuit);
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      display: none;
+      transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+    }
+    .custom-cursor.expand {
+      width: 28px;
+      height: 28px;
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 2px solid var(--white);
+      mix-blend-mode: difference;
+    }
+    @media (pointer: fine) {
+      .custom-cursor {
+        display: block;
+      }
+      /* Hide native cursor for interactive elements to look ultra-custom */
+      a, button, input, textarea, select, .grid-pixel {
+        cursor: none !important;
+      }
+    }
+
+    /* Glitch Title Text Effect */
+    .glitch-title {
+      position: relative;
+      display: inline-block;
+    }
+    .glitch-title::before,
+    .glitch-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+    .glitch-title::before {
+      left: 2px;
+      text-shadow: -2px 0 #00FF66;
+      clip: rect(44px, 9999px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    .glitch-title::after {
+      left: -2px;
+      text-shadow: -2px 0 #0B46B9, 2px 2px #041A4E;
+      clip: rect(85px, 9999px, 140px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+    
+    @keyframes glitch-anim {
+      0% { clip: rect(31px, 9999px, 94px, 0); }
+      10% { clip: rect(112px, 9999px, 76px, 0); }
+      20% { clip: rect(85px, 9999px, 5px, 0); }
+      30% { clip: rect(27px, 9999px, 115px, 0); }
+      40% { clip: rect(73px, 9999px, 29px, 0); }
+      50% { clip: rect(118px, 9999px, 142px, 0); }
+      60% { clip: rect(9px, 9999px, 53px, 0); }
+      70% { clip: rect(62px, 9999px, 120px, 0); }
+      80% { clip: rect(135px, 9999px, 88px, 0); }
+      90% { clip: rect(41px, 9999px, 148px, 0); }
+      100% { clip: rect(3px, 9999px, 62px, 0); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(76px, 9999px, 116px, 0); }
+      11% { clip: rect(5px, 9999px, 83px, 0); }
+      22% { clip: rect(122px, 9999px, 137px, 0); }
+      33% { clip: rect(41px, 9999px, 25px, 0); }
+      44% { clip: rect(98px, 9999px, 68px, 0); }
+      55% { clip: rect(14px, 9999px, 112px, 0); }
+      66% { clip: rect(83px, 9999px, 9px, 0); }
+      77% { clip: rect(110px, 9999px, 140px, 0); }
+      88% { clip: rect(53px, 9999px, 94px, 0); }
+      100% { clip: rect(125px, 9999px, 44px, 0); }
+    }
   </style>
 </head>
 <body>
@@ -1443,8 +1557,8 @@
           Disponible pour de nouveaux projets
         </div>
 
-        <h1 class="hero-name">
-          Gil<br>Kante
+        <h1 class="hero-name glitch-title" data-text="Gil Kante">
+          Gil Kante
         </h1>
 
         <div class="hero-title">
@@ -1471,10 +1585,10 @@
 
       <!-- RIGHT: Cybernetic Octogonal Visual -->
       <div class="hero-visual fade-in delay-2">
-        <div class="hero-snippet" aria-hidden="true">const dev = {
-  name: "Gil Kante",
-  stack: ["React", "NestJS"],
-  status: "available"
+        <div class="hero-snippet" aria-hidden="true"><span class="token keyword">const</span> <span class="token key">dev</span> <span class="token punctuation">=</span> {
+  <span class="token key">name:</span> <span class="token string">"Gil Kante"</span>,
+  <span class="token key">stack:</span> [<span class="token string">"React"</span>, <span class="token string">"NestJS"</span>],
+  <span class="token key">status:</span> <span class="token string">"available"</span>
 };</div>
 
         <div class="cyber-profile-container">
@@ -2202,33 +2316,33 @@
         </p>
 
         <div class="contact-links">
-          <a href="mailto:votre.email@exemple.com" class="contact-link" aria-label="Envoyer un email">
+          <a href="mailto:gilchrist.kante@epitech.eu" class="contact-link" aria-label="Envoyer un email">
             <div class="contact-link-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </div>
             <div>
               <div class="contact-link-meta">Email</div>
-              <div class="contact-link-val">votre.email@exemple.com</div>
+              <div class="contact-link-val">gilchrist.kante@epitech.eu</div>
             </div>
           </a>
 
-          <a href="https://linkedin.com/in/votre-profil" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Profil LinkedIn">
+          <a href="https://linkedin.com/in/gilchrist-kante" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Profil LinkedIn">
             <div class="contact-link-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
             </div>
             <div>
               <div class="contact-link-meta">LinkedIn</div>
-              <div class="contact-link-val">linkedin.com/in/votre-profil</div>
+              <div class="contact-link-val">linkedin.com/in/gilchrist-kante</div>
             </div>
           </a>
 
-          <a href="https://github.com/votre-username" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Profil GitHub">
+          <a href="https://github.com/misterkante" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Profil GitHub">
             <div class="contact-link-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
             </div>
             <div>
               <div class="contact-link-meta">GitHub</div>
-              <div class="contact-link-val">github.com/votre-username</div>
+              <div class="contact-link-val">github.com/misterkante</div>
             </div>
           </a>
         </div>
@@ -2373,10 +2487,12 @@
   document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 
   /* ------------------------------------------------------------------
-     INTERACTIVE PIXEL AFRO SCROLLER DISPERSION
+     INTERACTIVE PIXEL AFRO SCROLLER DISPERSION & MOUSE DEFLECTION
   ------------------------------------------------------------------ */
   const pixelGrid = document.querySelector('.pixel-grid');
-  if (pixelGrid) {
+  const interactiveContainer = document.getElementById('pixel-art-interactive');
+
+  if (pixelGrid && interactiveContainer) {
     const cols = 12;
     const rows = 12;
     const totalPixels = cols * rows;
@@ -2397,6 +2513,20 @@
       0,0,0,1,1,1,1,1,1,0,0,0
     ];
 
+    let mouseOverX = 0, mouseOverY = 0;
+    let isMouseIn = false;
+
+    interactiveContainer.addEventListener('mousemove', (e) => {
+      const rect = interactiveContainer.getBoundingClientRect();
+      mouseOverX = e.clientX - rect.left;
+      mouseOverY = e.clientY - rect.top;
+      isMouseIn = true;
+    }, { passive: true });
+
+    interactiveContainer.addEventListener('mouseleave', () => {
+      isMouseIn = false;
+    }, { passive: true });
+
     for (let i = 0; i < totalPixels; i++) {
       const pixel = document.createElement('div');
       pixel.classList.add('grid-pixel');
@@ -2411,31 +2541,76 @@
       }
       
       // Random dispersion vector directions
-      pixel.style.setProperty('--rx', (Math.random() - 0.5) * 160 + 'px');
-      pixel.style.setProperty('--ry', (Math.random() - 0.5) * 160 + 'px');
+      pixel.style.setProperty('--rx', String((Math.random() - 0.5) * 160));
+      pixel.style.setProperty('--ry', String((Math.random() - 0.5) * 160));
       pixelGrid.appendChild(pixel);
     }
+
+    let targetScatter = 0;
+    let currentScatter = 0;
 
     window.addEventListener('scroll', () => {
       const rect = pixelGrid.getBoundingClientRect();
       const viewHeight = window.innerHeight;
-      
-      // Calculate scroller progress centered at viewport
       const progress = Math.max(0, Math.min(1, (rect.top + rect.height/2) / viewHeight));
-      const scatter = Math.abs(progress - 0.5) * 2; // 0 when fully centered, 1 when out of view
+      targetScatter = Math.abs(progress - 0.5) * 2;
+    }, { passive: true });
 
-      const pixels = pixelGrid.querySelectorAll('.grid-pixel');
-      pixels.forEach(p => {
+    const pixels = pixelGrid.querySelectorAll('.grid-pixel');
+
+    function animatePixels() {
+      // Easing the scatter value
+      currentScatter += (targetScatter - currentScatter) * 0.08;
+
+      pixels.forEach((p, idx) => {
+        const px = p.offsetLeft + 6; // center coordinates
+        const py = p.offsetTop + 6;
+
+        let mouseOffsetX = 0;
+        let mouseOffsetY = 0;
+
+        if (isMouseIn) {
+          const dx = px - mouseOverX;
+          const dy = py - mouseOverY;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 80) {
+            const force = (80 - dist) / 80;
+            // Push pixels away with explosive speed
+            mouseOffsetX = (dx / (dist || 1)) * force * 40;
+            mouseOffsetY = (dy / (dist || 1)) * force * 40;
+          }
+        }
+
+        const rx = parseFloat(p.style.getPropertyValue('--rx'));
+        const ry = parseFloat(p.style.getPropertyValue('--ry'));
+
         if (p.classList.contains('active')) {
-          p.style.transform = `translate(calc(var(--rx) * ${scatter}), calc(var(--ry) * ${scatter})) scale(${1 - scatter * 0.5})`;
-          p.style.opacity = 1 - scatter * 0.7;
+          const totalX = rx * currentScatter + mouseOffsetX;
+          const totalY = ry * currentScatter + mouseOffsetY;
+          p.style.transform = `translate3d(${totalX}px, ${totalY}px, 0) scale(${1 - currentScatter * 0.5})`;
+          p.style.opacity = String(1 - currentScatter * 0.7);
+
+          if (isMouseIn) {
+            const dist = Math.sqrt((px - mouseOverX)*(px - mouseOverX) + (py - mouseOverY)*(py - mouseOverY));
+            if (dist < 80) {
+              p.style.backgroundColor = '#FFFFFF';
+              p.style.boxShadow = '0 0 10px #FFFFFF';
+            } else {
+              p.style.boxShadow = 'none';
+              p.style.backgroundColor = (idx % 2 === 0) ? '#FFFFFF' : '#0B46B9';
+            }
+          }
         } else {
-          // Subtle movement for empty background pixels
-          p.style.transform = `translate(calc(var(--rx) * ${1 - scatter} * 0.1), calc(var(--ry) * ${1 - scatter} * 0.1))`;
-          p.style.opacity = scatter * 0.15;
+          const totalX = rx * (1 - currentScatter) * 0.08 + mouseOffsetX * 0.25;
+          const totalY = ry * (1 - currentScatter) * 0.08 + mouseOffsetY * 0.25;
+          p.style.transform = `translate3d(${totalX}px, ${totalY}px, 0)`;
+          p.style.opacity = String(currentScatter * 0.15 + (isMouseIn ? 0.05 : 0));
         }
       });
-    }, { passive: true });
+
+      requestAnimationFrame(animatePixels);
+    }
+    requestAnimationFrame(animatePixels);
   }
 
   /* ------------------------------------------------------------------
@@ -2479,6 +2654,39 @@
       setTimeout(() => successMsg.classList.remove('show'), 6000);
     }, 1000);
   });
+
+  /* ------------------------------------------------------------------
+     CUSTOM INERTIAL CURSOR WITH EXPANSION ON HOVER
+  ------------------------------------------------------------------ */
+  if (window.matchMedia('(pointer: fine)').matches) {
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    document.body.appendChild(cursor);
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    }, { passive: true });
+
+    function updateCursor() {
+      const ease = 0.15;
+      cursorX += (mouseX - cursorX) * ease;
+      cursorY += (mouseY - cursorY) * ease;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    // Expand cursor on interactive items
+    document.querySelectorAll('a, button, input, textarea, select, .grid-pixel, .contact-link').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('expand'), { passive: true });
+      el.addEventListener('mouseleave', () => cursor.classList.remove('expand'), { passive: true });
+    });
+  }
 </script>
 
 </body>
