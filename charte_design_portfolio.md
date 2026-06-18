@@ -101,3 +101,19 @@ L'élément principal du portfolio (l'en-tête ou le conteneur du profil) ne doi
 Copiez-collez ce bloc pour configurer l'agent chargé du code :
 
 > "Agis en tant que développeur Creative Front-End de haut niveau. Redessine mon portfolio en appliquant strictement la charte 'Cyber-Urban Afrofuturism'. Tu dois respecter une palette trichrome exclusive : Bleu Cobalt (#0B46B9), Bleu Nuit (#041A4E) et Blanc (#FFFFFF). Utilise une typographie de signalisation routière (ex: Anton ou Oswald) pour les titres en majuscules. Bannis les arrondis standards (border-radius classiques) : utilise des formes octogonales complexes via clip-path. Intègre des tracés de circuits imprimés en SVG et des cassures de pixels asymétriques pour les bordures. Le bas des sections majeures doit se terminer par un effet de coulure liquide ou de peinture qui dégouline. Le résultat final doit être brutal, technologique et artistique, sans compromis corporate poli."
+
+---
+
+## 7. Règles d'Audit & Conformité Technique (Silicon Valley Standards)
+
+*Ajouté par l'Agent Refactor lors de la phase de polissage.*
+
+### A. Métadonnées Sociales obligatoires (SEO/OpenGraph) :
+Chaque page doit comporter des balises `og:title`, `og:description`, `og:image`, `og:url` et `twitter:card` pour assurer un rendu parfait lors de partages professionnels sur LinkedIn, Twitter et Slack.
+
+### B. Accessibilité Standard (A11y) :
+* Tous les éléments interactifs (`a`, `button`, `input`) doivent posséder un attribut `aria-label` descriptif ou un attribut équivalent si le texte n'est pas explicite.
+* Les images doivent obligatoirement inclure un attribut `alt`.
+
+### C. Zéro Placeholder en Production :
+Les adresses e-mail de type `exemple.com` et profils sociaux fictifs doivent être formellement proscrits au profit de profils vérifiés (GitHub `misterkante` et email `gilchrist.kante@epitech.eu`).
