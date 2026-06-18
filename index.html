@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gil Kante — Développeur Fullstack React/NestJS. Je transforme les idées en produits numériques robustes.">
+  <meta name="theme-color" content="#0040b0">
+  <title>Gil Kante — Développeur Fullstack React/NestJS</title>
+
+  <!-- Google Fonts — mêmes polices qu'Epitech.eu -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================================
+       VARIABLES & RESET
+       ===================================================================== */
+    :root {
+      --blue-primary:   #0040b0;
+      --blue-secondary: #003088;
+      --blue-accent:    #0a5cf5;
+      --blue-light:     #5c93ff;
+      --blue-lighter:   #eef4ff;
+      --bg-main:        #F8FAFC;
+      --bg-white:       #FFFFFF;
+      --text-primary:   #0F172A;
+      --text-secondary: #475569;
+      --text-muted:     #94A3B8;
+      --border:         #E2E8F0;
+      --shadow-sm:  0 1px 3px rgba(0,64,176,.10);
+      --shadow-md:  0 4px 20px rgba(0,64,176,.14);
+      --shadow-lg:  0 16px 48px rgba(0,64,176,.18);
+      --radius-sm:  8px;
+      --radius-md:  16px;
+      --radius-lg:  24px;
+      --ease:       cubic-bezier(.4,0,.2,1);
+      --transition: all .3s var(--ease);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { display:block; max-width:100%; }
+
+    /* =====================================================================
+       TYPOGRAPHY UTILITIES
+       ===================================================================== */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    /* =====================================================================
+       GRID PATTERN — reusable background
+       ===================================================================== */
+    .grid-bg {
+      position: relative;
+    }
+    .grid-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,64,176,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,64,176,.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .grid-bg > * { position: relative; z-index: 1; }
+
+    /* Dark grid (for blue sections) */
+    .grid-bg-dark::before {
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    }
+
+    /* =====================================================================
+       FLOATING CODE SYMBOLS — decorative
+       ===================================================================== */
+    .code-symbols {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .code-symbols span {
+      position: absolute;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-primary);
+      opacity: .035;
+      user-select: none;
+    }
+
+    /* =====================================================================
+       LAYOUT
+       ===================================================================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section { padding: 100px 0; }
+
+    .section-label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    .section-header { margin-bottom: 64px; }
+
+    .section-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--blue-accent);
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+
+    /* =====================================================================
+       FADE-IN ANIMATION
+       ===================================================================== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s var(--ease), transform .65s var(--ease);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: .1s; }
+    .delay-2 { transition-delay: .2s; }
+    .delay-3 { transition-delay: .3s; }
+    .delay-4 { transition-delay: .4s; }
+
+    /* =====================================================================
+       BUTTONS
+       ===================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    .btn svg { flex-shrink: 0; }
+
+    .btn-primary {
+      background: var(--blue-primary);
+      color: #fff;
+      border-color: var(--blue-primary);
+    }
+    .btn-primary:hover {
+      background: var(--blue-secondary);
+      border-color: var(--blue-secondary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--blue-primary);
+      border-color: var(--blue-primary);
+    }
+    .btn-outline:hover {
+      background: var(--blue-primary);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* =====================================================================
+       NAV
+       ===================================================================== */
+    #navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(248,250,252,.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s var(--ease);
+    }
+    #navbar.scrolled { box-shadow: var(--shadow-sm); }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--blue-primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--blue-accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--blue-accent);
+      border-radius: 2px;
+      transition: width .3s var(--ease);
+    }
+    .nav-links a:hover { color: var(--blue-primary); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--blue-primary) !important;
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600 !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover {
+      background: var(--blue-secondary) !important;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Burger */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--blue-primary);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* Mobile menu */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      z-index: 999;
+      padding: 16px 24px 24px;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    .mobile-nav a:hover {
+      background: var(--blue-lighter);
+      color: var(--blue-primary);
+    }
+
+    /* =====================================================================
+       HERO
+       ===================================================================== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      background: var(--bg-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero .code-symbols span:nth-child(1)  { top:8%;  left:3%;  font-size:14px; }
+    #hero .code-symbols span:nth-child(2)  { top:18%; left:55%; font-size:11px; }
+    #hero .code-symbols span:nth-child(3)  { top:35%; left:80%; font-size:16px; }
+    #hero .code-symbols span:nth-child(4)  { top:60%; left:7%;  font-size:12px; }
+    #hero .code-symbols span:nth-child(5)  { top:72%; left:70%; font-size:13px; }
+    #hero .code-symbols span:nth-child(6)  { top:85%; left:40%; font-size:10px; }
+    #hero .code-symbols span:nth-child(7)  { top:5%;  left:88%; font-size:15px; }
+    #hero .code-symbols span:nth-child(8)  { top:50%; left:45%; font-size:11px; }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    /* Badge "disponible" */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue-lighter);
+      color: var(--blue-primary);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(0,64,176,.25);
+    }
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.6; transform:scale(.82); }
+    }
+
+    .hero-name {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(44px, 7vw, 82px);
+      font-weight: 400;
+      line-height: 1.02;
+      margin-bottom: 14px;
+      letter-spacing: .5px;
+    }
+
+    .hero-title {
+      font-size: clamp(16px, 2vw, 21px);
+      font-weight: 500;
+      color: var(--blue-primary);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .hero-title .tag {
+      background: var(--blue-primary);
+      color: #fff;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .hero-tagline {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: 44px;
+    }
+    .hero-tagline strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Profile visual */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .profile-wrapper {
+      position: relative;
+      width: 360px;
+      height: 360px;
+    }
+
+    /* Morphing blob shape */
+    .profile-shape {
+      width: 100%;
+      height: 100%;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      background: linear-gradient(135deg, var(--blue-lighter) 0%, rgba(0,64,176,.1) 100%);
+      border: 2px solid rgba(0,64,176,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: morph 9s ease-in-out infinite;
+    }
+    @keyframes morph {
+      0%,100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+      25%      { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+      50%      { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+      75%      { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+    }
+
+    /*
+      ===================================================
+      PHOTO DE PROFIL
+      Pour ajouter votre photo :
+        1. Supprimez le bloc .profile-placeholder
+        2. Décommentez la balise <img> dans le HTML
+        3. Remplacez le src par le chemin de votre image
+      ===================================================
+    */
+    .profile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--blue-primary);
+      width: 100%;
+      height: 100%;
+    }
+    .profile-placeholder svg {
+      width: 80px;
+      height: 80px;
+      opacity: .35;
+    }
+    .profile-placeholder p {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      opacity: .4;
+    }
+
+    /* Floating badge beside the profile */
+    .profile-badge {
+      position: absolute;
+      bottom: 24px;
+      right: -24px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 18px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .profile-badge-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--blue-lighter);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .profile-badge-icon svg { color: var(--blue-accent); }
+    .profile-badge-label { font-size: 13px; font-weight: 700; color: var(--blue-primary); }
+    .profile-badge-sub   { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Code snippet decoration */
+    .hero-snippet {
+      position: absolute;
+      top: -8px;
+      left: -40px;
+      background: var(--blue-primary);
+      color: rgba(255,255,255,.75);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      line-height: 1.7;
+      padding: 12px 16px;
+      border-radius: 12px;
+      white-space: pre;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* =====================================================================
+       ABOUT
+       ===================================================================== */
+    #about { background: var(--bg-main); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+    .about-text p strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .about-quote {
+      background: var(--blue-primary);
+      color: #fff;
+      padding: 28px 32px;
+      border-radius: var(--radius-md);
+      margin-top: 36px;
+      position: relative;
+    }
+    .about-quote::before {
+      content: '"';
+      font-size: 80px;
+      font-family: Georgia, serif;
+      position: absolute;
+      top: -12px;
+      left: 22px;
+      opacity: .18;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .about-quote p {
+      color: rgba(255,255,255,.88);
+      font-size: 15px;
+      line-height: 1.75;
+      font-style: italic;
+      margin: 0;
+    }
+    .about-quote cite {
+      display: block;
+      margin-top: 14px;
+      font-style: normal;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,.5);
+    }
+
+    /* Stats cards */
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px 22px;
+      transition: var(--transition);
+    }
+    .stat-card:hover {
+      border-color: rgba(0,64,176,.3);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--blue-lighter);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .stat-icon svg { color: var(--blue-accent); }
+    .stat-num {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--blue-primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* =====================================================================
+       SKILLS
+       ===================================================================== */
+    #skills { background: var(--bg-white); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .skill-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 32px 28px;
+      transition: var(--transition);
+    }
+    .skill-card:hover {
+      border-color: rgba(0,64,176,.3);
+      box-shadow: var(--shadow-md);
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .skill-card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .skill-card-icon.c1 { background: var(--blue-primary); }
+    .skill-card-icon.c2 { background: var(--blue-secondary); }
+    .skill-card-icon.c3 { background: #003088; }
+    .skill-card-icon svg { color: #fff; }
+
+    .skill-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .skill-card .cat-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+    .tag:hover {
+      background: var(--blue-lighter);
+      border-color: rgba(0,64,176,.3);
+      color: var(--blue-primary);
+    }
+    .tag.main {
+      background: var(--blue-lighter);
+      border-color: rgba(0,64,176,.3);
+      color: var(--blue-primary);
+      font-weight: 600;
+    }
+
+    /* =====================================================================
+       EXPERIENCES
+       ===================================================================== */
+    #experiences { background: var(--bg-main); }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .exp-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--blue-accent), var(--blue-primary));
+      border-radius: 4px 0 0 4px;
+    }
+    .exp-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(0,64,176,.25);
+      transform: translateY(-4px);
+    }
+
+    .exp-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .exp-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--blue-lighter);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .exp-icon svg { color: var(--blue-primary); }
+    .exp-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--bg-main);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .exp-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .exp-company {
+      font-size: 14px;
+      color: var(--blue-accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .exp-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .exp-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--blue-primary);
+      color: #fff;
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: .3px;
+    }
+
+    /* =====================================================================
+       PROJECTS
+       ===================================================================== */
+    #projects { background: var(--bg-white); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .project-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .project-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(0,64,176,.25);
+      transform: translateY(-6px);
+    }
+
+    .project-header {
+      background: var(--blue-primary);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      min-height: 110px;
+      display: flex;
+      align-items: center;
+    }
+    .project-header.alt { background: var(--blue-secondary); }
+    .project-header::after {
+      content: '</>';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 52px;
+      font-weight: 700;
+      color: rgba(255,255,255,.06);
+      pointer-events: none;
+    }
+    .project-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+    .project-role {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: rgba(255,255,255,.55);
+      margin-top: 5px;
+    }
+
+    .project-body { padding: 24px 28px; }
+    .project-body p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .project-stack span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--bg-main);
+      color: var(--blue-primary);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .project-links { display: flex; gap: 8px; }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--blue-accent);
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--blue-lighter);
+      border: 1px solid rgba(0,64,176,.25);
+      transition: var(--transition);
+    }
+    .project-link:hover {
+      background: var(--blue-accent);
+      color: #fff;
+      border-color: var(--blue-accent);
+    }
+    .project-link svg { flex-shrink: 0; }
+
+    /* =====================================================================
+       PHILOSOPHY
+       ===================================================================== */
+    #philosophy {
+      background: var(--blue-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .philosophy-content {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .philosophy-content .section-label {
+      color: rgba(255,255,255,.55);
+    }
+    .philosophy-content h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(28px, 4.5vw, 48px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .philosophy-quote {
+      font-size: 19px;
+      color: rgba(255,255,255,.75);
+      line-height: 1.75;
+      margin-bottom: 60px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: left;
+    }
+    .pillar {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      transition: var(--transition);
+    }
+    .pillar:hover {
+      background: rgba(255,255,255,.12);
+      transform: translateY(-4px);
+    }
+    .pillar-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .pillar-icon svg { color: rgba(255,255,255,.8); }
+    .pillar h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .pillar p  { font-size: 13px; color: rgba(255,255,255,.58); line-height: 1.6; }
+
+    /* =====================================================================
+       CONTACT
+       ===================================================================== */
+    #contact { background: var(--bg-main); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .contact-info p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .contact-link:hover {
+      border-color: var(--blue-accent);
+      color: var(--blue-primary);
+      box-shadow: var(--shadow-sm);
+      transform: translateX(4px);
+    }
+    .contact-link-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--blue-lighter);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-link-icon svg { color: var(--blue-primary); }
+    .contact-link-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+    .contact-link-val  { font-size: 14px; font-weight: 600; }
+
+    /* Form */
+    .contact-form {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 44px 40px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group { margin-bottom: 22px; }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-main);
+      outline: none;
+      transition: var(--transition);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue-accent);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(0,64,176,.12);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 16px;
+      color: #059669;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .form-success.show { display: block; }
+
+    /* =====================================================================
+       FOOTER
+       ===================================================================== */
+    footer {
+      background: var(--blue-primary);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .footer-brand span { color: var(--blue-accent); }
+    .footer-tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: rgba(255,255,255,.45);
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: rgba(255,255,255,.4);
+    }
+
+    /* =====================================================================
+       SCROLL-TO-TOP
+       ===================================================================== */
+    #scroll-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 46px;
+      height: 46px;
+      background: var(--blue-primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      z-index: 100;
+    }
+    #scroll-top.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+    #scroll-top:hover {
+      background: var(--blue-secondary);
+      transform: translateY(-3px);
+    }
+
+    /* =====================================================================
+       RESPONSIVE
+       ===================================================================== */
+    @media (max-width: 1024px) {
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .hero-inner  { gap: 40px; }
+      .profile-wrapper { width: 300px; height: 300px; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 72px 0; }
+
+      .nav-links { display: none; }
+      .burger    { display: flex; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 48px;
+      }
+      .hero-visual  { order: -1; }
+      .hero-tagline { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-title   { justify-content: center; }
+      .hero-snippet { display: none; }
+      .profile-badge { right: 0; bottom: -12px; }
+      .profile-wrapper { width: 240px; height: 240px; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+
+      .skills-grid { grid-template-columns: 1fr; }
+
+      .exp-grid { grid-template-columns: 1fr; }
+
+      .projects-grid { grid-template-columns: 1fr; }
+
+      .pillars { grid-template-columns: 1fr; }
+
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .contact-form { padding: 28px 20px; }
+      .about-stats { grid-template-columns: 1fr; }
+      .profile-wrapper { width: 210px; height: 210px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- =====================================================================
+     NAV
+     ===================================================================== -->
+<nav id="navbar" role="navigation" aria-label="Navigation principale">
+  <div class="nav-inner">
+
+    <!-- === MODIFIER : remplacez "GK" par vos initiales si besoin === -->
+    <a href="#hero" class="nav-logo">GK<span>.</span></a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#experiences">Expériences</a></li>
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#contact" class="nav-cta">Me contacter</a></li>
+    </ul>
+
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+  <a href="#about"       onclick="closeMobileNav()">À propos</a>
+  <a href="#skills"      onclick="closeMobileNav()">Compétences</a>
+  <a href="#experiences" onclick="closeMobileNav()">Expériences</a>
+  <a href="#projects"    onclick="closeMobileNav()">Projets</a>
+  <a href="#contact"     onclick="closeMobileNav()">Me contacter</a>
+</nav>
+
+
+<!-- =====================================================================
+     HERO
+     ===================================================================== -->
+<section id="hero" aria-label="Introduction">
+
+  <!-- Floating code symbols (decorative) -->
+  <div class="code-symbols" aria-hidden="true">
+    <span>{ }</span>
+    <span>const</span>
+    <span>&lt;/&gt;</span>
+    <span>() =&gt;</span>
+    <span>async</span>
+    <span>return</span>
+    <span>.tsx</span>
+    <span>await</span>
+  </div>
+
+  <div class="container">
+    <div class="hero-inner">
+
+      <!-- LEFT: Text -->
+      <div>
+        <div class="hero-badge fade-in">
+          <span class="dot"></span>
+          Disponible pour de nouveaux projets
+        </div>
+
+        <!--
+          === MODIFIER ===
+          Remplacez "Gil" et "Kante" par votre prénom / nom
+        -->
+        <h1 class="hero-name fade-in delay-1">
+          <span class="gradient-text">Gil</span><br>Kante
+        </h1>
+
+        <div class="hero-title fade-in delay-2">
+          Développeur Fullstack
+          <span class="tag">React / NestJS</span>
+        </div>
+
+        <p class="hero-tagline fade-in delay-3">
+          Je transforme les <strong>idées en produits numériques robustes</strong> —
+          de la première ligne de code jusqu'au déploiement en production.
+        </p>
+
+        <div class="hero-actions fade-in delay-4">
+          <a href="#projects" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            Voir mes projets
+          </a>
+          <a href="#contact" class="btn btn-outline">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Me contacter
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Profile visual -->
+      <div class="hero-visual fade-in delay-2">
+
+        <!-- Code snippet decoration -->
+        <div class="hero-snippet" aria-hidden="true">const dev = {
+  name: "Gil Kante",
+  stack: ["React", "NestJS"],
+  status: "available" ✓
+};</div>
+
+        <div class="profile-wrapper">
+          <div class="profile-shape">
+            <!--
+              =====================================================
+              PHOTO DE PROFIL — INSTRUCTIONS
+              =====================================================
+              1. Commentez ou supprimez le bloc .profile-placeholder
+              2. Décommentez la ligne <img> ci-dessous
+              3. Remplacez "votre-photo.jpg" par votre chemin image
+              4. Assurez-vous que l'image est carrée ou quasi-carrée
+              =====================================================
+            -->
+
+            <img src="profile.jpg" alt="Gil Kante — Développeur Fullstack React/NestJS" class="profile-photo">
+          </div>
+
+          <!-- Floating badge -->
+          <div class="profile-badge" aria-hidden="true">
+            <div class="profile-badge-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div>
+              <div class="profile-badge-label">Team Lead</div>
+              <div class="profile-badge-sub">React / NestJS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     À PROPOS
+     ===================================================================== -->
+<section id="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="about-grid">
+
+      <!-- Text -->
+      <div class="fade-in">
+        <span class="section-label">// À propos</span>
+        <h2 id="about-title" class="section-title">
+          Humain d'abord,<br>
+          <span class="gradient-text">développeur ensuite</span>
+        </h2>
+        <div class="section-divider"></div>
+
+        <p>
+          Mon parcours commence par une <strong>licence en analyse informatique et programmation</strong>,
+          là où j'ai compris que la technologie est avant tout un outil au service des gens.
+        </p>
+        <p>
+          Premier terrain réel : un <strong>stage de digitalisation universitaire</strong>. Laravel côté serveur,
+          Flutter côté mobile. J'ai vite appris que les premières semaines d'un projet sont souvent les plus ingrates
+          — mais c'est précisément là que les fondations se posent.
+        </p>
+        <p>
+          La <strong>Coding Academy Epitech</strong> m'a appris à être fullstack dans le sens profond du terme :
+          React, NestJS, TypeScript, architecture propre, bonnes pratiques, et surtout — comment livrer.
+        </p>
+        <p>
+          En parallèle, le <strong>freelance</strong> m'a confronté à la vraie vie : des clients avec une idée
+          mais sans roadmap, des contraintes budgétaires serrées. J'ai livré des applications NFC réelles,
+          des interfaces admin, des apps mobiles avec Supabase.
+        </p>
+        <p>
+          Aujourd'hui, je suis <strong>développeur et team lead</strong> sur un projet fullstack React/NestJS :
+          code reviews, gestion de backlog, accompagnement de l'équipe.
+          Le développement, c'est 30 % de code et 70 % de communication.
+        </p>
+
+        <blockquote class="about-quote">
+          <p>
+            Les débuts sont souvent exigeants et peu reconnus —
+            mais c'est précisément là, dans l'effort discret,
+            que les fondations se posent. Et c'est ce qui fait tenir tout le reste.
+          </p>
+          <cite>— Ma philosophie de terrain</cite>
+        </blockquote>
+      </div>
+
+      <!-- Stats -->
+      <div class="about-stats fade-in delay-2">
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Années d'expérience terrain</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+          </div>
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Projets livrés en production</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Développeurs accompagnés (team lead)</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div class="stat-num">2</div>
+          <div class="stat-label">Formations certifiantes</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     COMPÉTENCES
+     ===================================================================== -->
+<section id="skills" class="grid-bg" aria-labelledby="skills-title">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">// Stack technique</span>
+      <h2 id="skills-title" class="section-title">
+        Ce que je maîtrise,<br>
+        <span class="gradient-text">ce que j'apprends</span>
+      </h2>
+      <p class="section-subtitle">
+        Ma stack principale tourne autour de React et NestJS, avec une appétence
+        pour les architectures propres et les interfaces qui respirent.
+      </p>
+    </div>
+
+    <div class="skills-grid">
+
+      <!-- Stack principale -->
+      <div class="skill-card fade-in delay-1">
+        <div class="skill-card-header">
+          <div class="skill-card-icon c1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div>
+            <h3>Stack principale</h3>
+            <p class="cat-desc">Mon terrain de jeu quotidien</p>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag main">React</span>
+          <span class="tag main">NestJS</span>
+          <span class="tag main">TypeScript</span>
+          <span class="tag main">Next.js</span>
+          <span class="tag main">Tailwind CSS</span>
+          <span class="tag main">Supabase</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Prisma ORM</span>
+          <span class="tag">REST API</span>
+        </div>
+      </div>
+
+      <!-- Stack secondaire -->
+      <div class="skill-card fade-in delay-2">
+        <div class="skill-card-header">
+          <div class="skill-card-icon c2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          </div>
+          <div>
+            <h3>Stack secondaire</h3>
+            <p class="cat-desc">Expériences diverses, vraie polyvalence</p>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">Laravel</span>
+          <span class="tag">Vue.js</span>
+          <span class="tag">Flask</span>
+          <span class="tag">Flutter</span>
+          <span class="tag">React Native</span>
+          <span class="tag">PHP</span>
+          <span class="tag">Python</span>
+          <span class="tag">MySQL</span>
+        </div>
+      </div>
+
+      <!-- Outils -->
+      <div class="skill-card fade-in delay-3">
+        <div class="skill-card-header">
+          <div class="skill-card-icon c3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div>
+            <h3>Outils &amp; méthodes</h3>
+            <p class="cat-desc">Pour livrer proprement et collaborer</p>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag main">Git / GitHub</span>
+          <span class="tag main">Trello</span>
+          <span class="tag">Docker</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Postman</span>
+          <span class="tag">Linux</span>
+          <span class="tag">Agile / Scrum</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     EXPÉRIENCES
+     ===================================================================== -->
+<section id="experiences" aria-labelledby="experiences-title">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">// Expériences clés</span>
+      <h2 id="experiences-title" class="section-title">
+        Les expériences qui<br>
+        <span class="gradient-text">m'ont construit</span>
+      </h2>
+    </div>
+
+    <div class="exp-grid">
+
+      <!-- Exp 1 : Stage actuel (team lead) -->
+      <article class="exp-card fade-in delay-1">
+        <div class="exp-card-top">
+          <div class="exp-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <span class="exp-date">2024 — Présent</span>
+        </div>
+        <h3>Développeur Fullstack &amp; Team Lead</h3>
+        <div class="exp-company">Stage principal · Projet React / NestJS</div>
+        <p>
+          Développement fullstack sur une application métier complexe. En parallèle, rôle de
+          team lead : code reviews réguliers, gestion du backlog sur Trello, accompagnement des
+          développeurs juniors, coordination des sprints. Le développement est aussi une affaire
+          de communication.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag">React</span>
+          <span class="exp-tag">NestJS</span>
+          <span class="exp-tag">TypeScript</span>
+          <span class="exp-tag">Team Lead</span>
+          <span class="exp-tag">Trello</span>
+          <span class="exp-tag">Code Review</span>
+        </div>
+      </article>
+
+      <!-- Exp 2 : Freelance NFC -->
+      <article class="exp-card fade-in delay-2">
+        <div class="exp-card-top">
+          <div class="exp-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 13a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7z"/><path d="M16 2v4"/><path d="M8 2v4"/><circle cx="12" cy="13" r="2"/></svg>
+          </div>
+          <span class="exp-date">2023 — 2024</span>
+        </div>
+        <h3>Développeur Freelance — Carte NFC</h3>
+        <div class="exp-company">Mission freelance · Mobile + Admin</div>
+        <p>
+          Conception et livraison d'un système complet : carte NFC physique connectée à un profil
+          numérique dynamique. Application mobile React Native pour les utilisateurs, interface
+          admin NestJS + Supabase pour la gestion des profils, rôles et analytics.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag">React Native</span>
+          <span class="exp-tag">NestJS</span>
+          <span class="exp-tag">Supabase</span>
+          <span class="exp-tag">NFC</span>
+          <span class="exp-tag">Freelance</span>
+        </div>
+      </article>
+
+      <!-- Exp 3 : Digitalisation universitaire -->
+      <article class="exp-card fade-in delay-3">
+        <div class="exp-card-top">
+          <div class="exp-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <span class="exp-date">2022 — 2023</span>
+        </div>
+        <h3>Stage — Digitalisation Universitaire</h3>
+        <div class="exp-company">Stage de fin d'études · Université</div>
+        <p>
+          Participation à la numérisation des processus administratifs d'un établissement
+          universitaire. Développement backend en Laravel, application mobile Flutter pour les
+          étudiants. Premier grand projet en conditions réelles — là où tout a commencé.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag">Laravel</span>
+          <span class="exp-tag">Flutter</span>
+          <span class="exp-tag">PHP</span>
+          <span class="exp-tag">MySQL</span>
+          <span class="exp-tag">REST API</span>
+        </div>
+      </article>
+
+      <!-- Exp 4 : Blockchain Benin / minds3o -->
+      <article class="exp-card fade-in delay-4">
+        <div class="exp-card-top">
+          <div class="exp-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <span class="exp-date">2023 — Présent</span>
+        </div>
+        <h3>Blockchain Benin &amp; minds3o.com</h3>
+        <div class="exp-company">Projet associatif &amp; entrepreneuriat numérique</div>
+        <p>
+          Implication dans le collectif Blockchain Benin, visant à sensibiliser et
+          professionnaliser la communauté tech locale en Afrique de l'Ouest. En parallèle,
+          développement et mise en ligne du site <strong>minds3o.com</strong> — une plateforme
+          numérique active, de bout en bout.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag">React</span>
+          <span class="exp-tag">Blockchain</span>
+          <span class="exp-tag">Communauté</span>
+          <span class="exp-tag">Entrepreneuriat</span>
+          <span class="exp-tag">En ligne</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     PROJETS
+     ===================================================================== -->
+<section id="projects" class="grid-bg" aria-labelledby="projects-title">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">// Projets vedettes</span>
+      <h2 id="projects-title" class="section-title">
+        Ce que j'ai construit,<br>
+        <span class="gradient-text">ce qui tourne en prod</span>
+      </h2>
+      <p class="section-subtitle">
+        Des projets concrets, livrés, utilisés. Pas juste des démos.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Projet 1 : minds3o -->
+      <article class="project-card fade-in delay-1">
+        <div class="project-header">
+          <div>
+            <h3>minds3o</h3>
+            <p class="project-role">// Développeur principal · En ligne</p>
+          </div>
+        </div>
+        <div class="project-body">
+          <p>
+            Plateforme numérique conçue et développée de bout en bout. Interface soignée,
+            architecture pensée pour scaler. Un projet qui illustre ma capacité à mener
+            un produit de l'idée jusqu'à la mise en production.
+          </p>
+          <div class="project-footer">
+            <div class="project-stack">
+              <span>React</span>
+              <span>TypeScript</span>
+              <span>NestJS</span>
+              <span>Supabase</span>
+            </div>
+            <div class="project-links">
+              <!--
+                === MODIFIER : remplacez l'URL par celle de votre site ===
+              -->
+              <a href="https://minds3o.com" target="_blank" rel="noopener noreferrer" class="project-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                Voir le site
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Projet 2 : Notes de frais -->
+      <article class="project-card fade-in delay-2">
+        <div class="project-header alt">
+          <div>
+            <h3>App Notes de Frais</h3>
+            <p class="project-role">// Développeur fullstack · Mobile</p>
+          </div>
+        </div>
+        <div class="project-body">
+          <p>
+            Application mobile complète de gestion des notes de frais : soumission,
+            validation hiérarchique, export. Interface Flutter native, backend NestJS
+            avec authentification JWT et gestion des rôles. Livré pour une structure
+            professionnelle.
+          </p>
+          <div class="project-footer">
+            <div class="project-stack">
+              <span>Flutter</span>
+              <span>NestJS</span>
+              <span>PostgreSQL</span>
+              <span>JWT</span>
+            </div>
+            <div class="project-links">
+              <!--
+                === MODIFIER : ajoutez votre lien GitHub ou retirez ce bloc si projet privé ===
+              -->
+              <a href="#" class="project-link" aria-label="Voir le code source sur GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Projet 3 : Carte NFC -->
+      <article class="project-card fade-in delay-3">
+        <div class="project-header">
+          <div>
+            <h3>Système Carte NFC</h3>
+            <p class="project-role">// Lead développeur · Freelance</p>
+          </div>
+        </div>
+        <div class="project-body">
+          <p>
+            Écosystème complet : carte NFC physique → scan → profil utilisateur dynamique.
+            Application mobile React Native, dashboard admin, gestion des profils et analytics.
+            Déployé et utilisé par de vrais clients.
+          </p>
+          <div class="project-footer">
+            <div class="project-stack">
+              <span>React Native</span>
+              <span>NestJS</span>
+              <span>Supabase</span>
+              <span>NFC</span>
+            </div>
+            <div class="project-links">
+              <!--
+                === MODIFIER : ajoutez votre lien GitHub ou démo ===
+              -->
+              <a href="#" class="project-link" aria-label="Voir le code source sur GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Projet 4 : Blockchain Benin -->
+      <article class="project-card fade-in delay-4">
+        <div class="project-header alt">
+          <div>
+            <h3>Blockchain Benin</h3>
+            <p class="project-role">// Contributeur · Associatif &amp; Tech</p>
+          </div>
+        </div>
+        <div class="project-body">
+          <p>
+            Initiative communautaire pour démocratiser les technologies blockchain en Afrique
+            de l'Ouest. Contribution au site, organisation d'ateliers, vulgarisation technique.
+            Parce que partager le savoir, c'est une façon de construire.
+          </p>
+          <div class="project-footer">
+            <div class="project-stack">
+              <span>React</span>
+              <span>Web3</span>
+              <span>Communauté</span>
+            </div>
+            <div class="project-links">
+              <!--
+                === MODIFIER : ajoutez l'URL Blockchain Benin ===
+              -->
+              <a href="#" class="project-link" aria-label="Voir le site Blockchain Benin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                Voir
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     PHILOSOPHIE
+     ===================================================================== -->
+<section id="philosophy" class="grid-bg grid-bg-dark" aria-labelledby="philosophy-title">
+  <div class="container">
+    <div class="philosophy-content fade-in">
+
+      <span class="section-label">// Ma philosophie</span>
+      <h2 id="philosophy-title">
+        Aider les petits acteurs à passer<br>
+        de l'idée à l'action
+      </h2>
+
+      <p class="philosophy-quote">
+        Je crois que la technologie ne devrait pas être réservée aux grandes structures.
+        Chaque entrepreneur local, chaque association, chaque PME mérite un outil numérique
+        qui lui ressemble — solide, simple, humain. C'est ça qui me motive le matin.
+      </p>
+
+      <div class="pillars">
+
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+          </div>
+          <h4>Fiabilité avant tout</h4>
+          <p>Un produit qui plante, c'est un client perdu. Je livre du code stable, testé, maintenable.</p>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h4>L'humain au centre</h4>
+          <p>Le code sert les gens. Je conçois des interfaces pour les utilisateurs, pas pour les développeurs.</p>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h4>Livrer, c'est sacré</h4>
+          <p>Une fonctionnalité non livrée n'existe pas. Je m'engage sur les délais et communique quand ça bloque.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     CONTACT
+     ===================================================================== -->
+<section id="contact" aria-labelledby="contact-title">
+  <div class="container">
+
+    <div class="section-header fade-in">
+      <span class="section-label">// Contact</span>
+      <h2 id="contact-title" class="section-title">
+        Parlons de votre<br>
+        <span class="gradient-text">prochain projet</span>
+      </h2>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Info -->
+      <div class="fade-in">
+        <h3>Je suis à l'écoute</h3>
+        <p>
+          Que ce soit pour un projet freelance, une opportunité de collaboration,
+          ou juste pour échanger sur la tech — je réponds.
+        </p>
+
+        <div class="contact-links">
+
+          <!--
+            === MODIFIER : remplacez toutes les valeurs ci-dessous par vos vraies coordonnées ===
+          -->
+
+          <a href="mailto:votre.email@exemple.com" class="contact-link" aria-label="Envoyer un email">
+            <div class="contact-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-meta">Email</div>
+              <!-- Remplacez par votre email -->
+              <div class="contact-link-val">votre.email@exemple.com</div>
+            </div>
+          </a>
+
+          <a href="https://linkedin.com/in/votre-profil" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Profil LinkedIn">
+            <div class="contact-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-meta">LinkedIn</div>
+              <!-- Remplacez par votre profil LinkedIn -->
+              <div class="contact-link-val">linkedin.com/in/votre-profil</div>
+            </div>
+          </a>
+
+          <a href="https://github.com/votre-username" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Profil GitHub">
+            <div class="contact-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-meta">GitHub</div>
+              <!-- Remplacez par votre username GitHub -->
+              <div class="contact-link-val">github.com/votre-username</div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="fade-in delay-2">
+        <form class="contact-form" id="contact-form" novalidate aria-label="Formulaire de contact">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">Votre nom</label>
+              <input type="text" id="f-name" name="name" placeholder="Jean Dupont" required autocomplete="name" aria-required="true">
+            </div>
+            <div class="form-group">
+              <label for="f-email">Votre email</label>
+              <input type="email" id="f-email" name="email" placeholder="jean@exemple.com" required autocomplete="email" aria-required="true">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="f-subject">Sujet</label>
+            <input type="text" id="f-subject" name="subject" placeholder="Projet freelance, opportunité, collaboration…">
+          </div>
+
+          <div class="form-group">
+            <label for="f-message">Votre message</label>
+            <textarea id="f-message" name="message" placeholder="Décrivez votre projet ou besoin en quelques lignes…" required aria-required="true"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            Envoyer le message
+          </button>
+
+          <!--
+            === INTÉGRATION EMAIL ===
+            Ce formulaire simule l'envoi. Pour un envoi réel :
+            Option A — Formspree (gratuit, 0 backend) :
+              1. Inscrivez-vous sur https://formspree.io
+              2. Ajoutez action="https://formspree.io/f/VOTRE_ID" method="POST" sur le <form>
+              3. Supprimez le JS du submit et laissez le formulaire se soumettre normalement
+
+            Option B — EmailJS (côté client, gratuit jusqu'à 200 emails/mois) :
+              https://www.emailjs.com/
+
+            Option C — Votre propre endpoint NestJS (POST /contact)
+          -->
+
+          <div class="form-success" id="form-success" role="alert" aria-live="polite">
+            Message reçu — je vous réponds dans les 48h.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =====================================================================
+     FOOTER
+     ===================================================================== -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <!-- Remplacez "GK" par vos initiales si besoin -->
+      <div class="footer-brand">GK<span>.</span></div>
+      <div class="footer-tagline">"humain d'abord — code ensuite"</div>
+      <div class="footer-copy">© 2026 Gil Kante · Tous droits réservés</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button id="scroll-top" aria-label="Retour en haut de la page">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+
+<!-- =====================================================================
+     SCRIPTS
+     ===================================================================== -->
+<script>
+  /* ------------------------------------------------------------------
+     NAV - scroll shadow + scroll-to-top visibility
+  ------------------------------------------------------------------ */
+  const navbar    = document.getElementById('navbar');
+  const scrollTop = document.getElementById('scroll-top');
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 16);
+    scrollTop.classList.toggle('show', y > 460);
+  }, { passive: true });
+
+  scrollTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ------------------------------------------------------------------
+     MOBILE NAV
+  ------------------------------------------------------------------ */
+  const burger    = document.getElementById('burger');
+  const mobileNav = document.getElementById('mobile-nav');
+  let   mOpen     = false;
+
+  burger.addEventListener('click', () => {
+    mOpen = !mOpen;
+    mobileNav.classList.toggle('open', mOpen);
+    burger.setAttribute('aria-expanded', String(mOpen));
+  });
+
+  function closeMobileNav() {
+    mOpen = false;
+    mobileNav.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
+
+  document.addEventListener('click', (e) => {
+    if (mOpen && !burger.contains(e.target) && !mobileNav.contains(e.target)) {
+      closeMobileNav();
+    }
+  });
+
+  /* ------------------------------------------------------------------
+     SMOOTH SCROLL (anchor links, accounting for fixed nav)
+  ------------------------------------------------------------------ */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const offset = target.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     FADE-IN on scroll (IntersectionObserver)
+  ------------------------------------------------------------------ */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+  /* ------------------------------------------------------------------
+     CONTACT FORM — validation + simulation d'envoi
+  ------------------------------------------------------------------ */
+  const form        = document.getElementById('contact-form');
+  const successMsg  = document.getElementById('form-success');
+  const EMAIL_RE    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name    = document.getElementById('f-name').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const message = document.getElementById('f-message').value.trim();
+
+    if (!name || !email || !message) {
+      alert('Merci de remplir les champs obligatoires (nom, email, message).');
+      return;
+    }
+    if (!EMAIL_RE.test(email)) {
+      alert('Veuillez saisir une adresse email valide.');
+      return;
+    }
+
+    const btn = form.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+
+    // Simulation — remplacez par fetch() vers votre endpoint ou Formspree
+    setTimeout(() => {
+      form.reset();
+      btn.disabled = false;
+      btn.innerHTML = [
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"',
+        ' fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"',
+        ' stroke-linejoin="round" aria-hidden="true">',
+        '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+        '</svg> Envoyer le message'
+      ].join('');
+      successMsg.classList.add('show');
+      setTimeout(() => successMsg.classList.remove('show'), 6000);
+    }, 900);
+  });
+</script>
+
+</body>
+</html>
