@@ -1,34 +1,19 @@
-# Indice de Confiance Portfolio (Trust Score Card)
+### [Indice de Confiance B2B & Partenariat]
+* **Score Global :** `95 / 100`
+* **Niveau de Risque :** Faible
 
-Ce rapport évalue le niveau de confiance technique et professionnel ("Trust Score") du portfolio pour un recruteur ou un client d'affaires (B2B/Freelance).
+### Ventilation des Notes :
+* *Livrables Réels :* 30/30
+* *Sécurité & Risque :* 20/25
+* *Leadership & Équipe :* 25/25
+* *Communication :* 20/20
 
-## 🏆 Score Global
-```text
-Score : 100 / 100
-[████████████████████] (100%)
-```
-
-### Classification du profil :
-- **Score >= 90** : **PRO GRANDE CONFANCE (Silicon Valley Ready)** - Le profil est authentifié, professionnel, optimisé et captivant.
-- **Score 75-89** : **CONFANCE CRÉDIBLE** - Prêt pour une utilisation standard, quelques métadonnées à affiner.
-- **Score < 75** : **À AMÉLIORER** - Placeholders trop nombreux ou manque d'interactivité.
-
----
-
-## 📈 Détail du Calcul des Points
-
-- +10: Real developer email coordinate verified (gilchrist.kante@epitech.eu)
-- +10: Professional GitHub developer profile verified (github.com/misterkante)
-- +10: LinkedIn career verification profile active
-- +5: Page Title tag correctly set
-- +10: General SEO meta description active
-- +10: OpenGraph social media sharing active
-- +5: High-fidelity custom inertial cursor is active
-- +5: Theme-appropriate glitch text title effect active
-- +10: Interactive scroll/mouse afro pixel grid active and dynamic
-- +5: Working contact submission form simulator active
-- +10: Strict dual-cobalt palette colors respected (#0B46B9, #041A4E)
-- +10: Typographical rule alignment OK (IBM Plex Mono + Anton/Oswald headers)
-
----
-*Généré par l'Agent Calculateur de Confiance le Thu Jun 18 19:47:48 CEST 2026*
+### Analyse Commerciale :
+* **Ce qui inspire confiance :**
+  - Projets réels et physiques déployés en production (Système NFC et Plateforme Minds3o).
+  - Prise en compte des mécanismes d'authentification sécurisés (JWT, rôles, Supabase).
+  - Profil hybride démontrant des compétences de leadership (Team Lead, code reviews, coordination agile).
+* **Ce qui freine la vente :**
+  - Aucun frein commercial majeur détecté.
+* **Recommandation pour maximiser le ROI du Portfolio :**
+  Mettre en avant le ROI financier ou le gain de productivité apporté aux clients précédents (ex: réduction des coûts de gestion des frais de 30%).

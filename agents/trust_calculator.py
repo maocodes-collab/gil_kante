@@ -3,7 +3,7 @@ import os
 import re
 
 def calculate_trust_score(html_path):
-    print("=== [AGENT TRUST CALCULATOR] Starting Trust Score Assessment ===")
+    print("=== [TRUST-SCORE-AGENT] Starting B2B Trust Assessment ===")
     
     if not os.path.exists(html_path):
         return {"error": "index.html not found"}
@@ -11,131 +11,95 @@ def calculate_trust_score(html_path):
     with open(html_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    score = 0
-    max_score = 100
-    breakdown = []
+    # Criteria 1: Reliability & Production-ready deliverables (30 pts)
+    reliability_pts = 0
+    # Check if there are valid live links (minds3o.com is live)
+    if "minds3o.com" in html:
+        reliability_pts += 15
+    if "En ligne" in html or "déployé" in html.lower():
+        reliability_pts += 15
 
-    # Category 1: Professional Identity Coordinates (30 pts)
-    id_score = 0
-    if "gilchrist.kante@epitech.eu" in html:
-        id_score += 10
-        breakdown.append("+10: Real developer email coordinate verified (gilchrist.kante@epitech.eu)")
+    # Criteria 2: Risk Management & Security (25 pts)
+    security_pts = 0
+    security_keywords = ["jwt", "chiffrement", "rôles", "sécurité", "authentification", "validation"]
+    found_security = [kw for kw in security_keywords if kw.lower() in html.lower()]
+    security_pts = min(25, len(found_security) * 5)
+
+    # Criteria 3: Teamwork & Leadership (25 pts)
+    teamwork_pts = 0
+    teamwork_keywords = ["team lead", "sprints", "coordination", "code review", "collaborateurs", "trello"]
+    found_teamwork = [kw for kw in teamwork_keywords if kw.lower() in html.lower()]
+    teamwork_pts = min(25, len(found_teamwork) * 5)
+
+    # Criteria 4: Technical Communication Clarity (20 pts)
+    comm_pts = 0
+    if len(html) > 50000: # detailed documentation
+        comm_pts += 10
+    if "IBM Plex Mono" in html: # professional typography
+        comm_pts += 10
+
+    total_score = reliability_pts + security_pts + teamwork_pts + comm_pts
+
+    # Determine risk level
+    if total_score >= 85:
+        risk_level = "Faible"
+    elif total_score >= 60:
+        risk_level = "Modéré"
     else:
-        breakdown.append("+0: Developer email placeholder or outdated address detected")
+        risk_level = "Élevé"
 
-    if "github.com/misterkante" in html:
-        id_score += 10
-        breakdown.append("+10: Professional GitHub developer profile verified (github.com/misterkante)")
+    # Commercial analysis points
+    strengths = []
+    barriers = []
+    recommendation = ""
+
+    if reliability_pts >= 25:
+        strengths.append("Projets réels et physiques déployés en production (Système NFC et Plateforme Minds3o).")
     else:
-        breakdown.append("+0: GitHub profile placeholder detected")
+        barriers.append("Manque de projets de production vérifiables publiquement.")
 
-    if "linkedin.com/in/gilchrist-kante" in html:
-        id_score += 10
-        breakdown.append("+10: LinkedIn career verification profile active")
+    if security_pts >= 15:
+        strengths.append("Prise en compte des mécanismes d'authentification sécurisés (JWT, rôles, Supabase).")
     else:
-        breakdown.append("+0: LinkedIn profile placeholder detected")
-    score += id_score
+        barriers.append("Faible mention des mécanismes de chiffrement et de conformité des données (RGPD).")
 
-    # Category 2: SEO & Meta Integration (25 pts)
-    seo_score = 0
-    if "<title>" in html.lower() and "</title>" in html.lower():
-        seo_score += 5
-        breakdown.append("+5: Page Title tag correctly set")
+    if teamwork_pts >= 15:
+        strengths.append("Profil hybride démontrant des compétences de leadership (Team Lead, code reviews, coordination agile).")
     else:
-        breakdown.append("+0: Missing header title tag")
+        barriers.append("Absence de preuve de travail en environnement d'équipe structuré ou CI/CD.")
 
-    if re.search(r'<meta[^>]*name=["\']description["\']', html, re.IGNORECASE):
-        seo_score += 10
-        breakdown.append("+10: General SEO meta description active")
+    # Custom recommendation
+    if total_score < 90:
+        recommendation = "Ajouter des mentions explicites sur l'automatisation de l'infrastructure (pipelines CI/CD, GitHub Actions) et la sécurité (conformité HIPAA/RGPD, chiffrement au repos)."
     else:
-        breakdown.append("+0: Missing meta description (recruiter indexation penalty)")
+        recommendation = "Mettre en avant le ROI financier ou le gain de productivité apporté aux clients précédents (ex: réduction des coûts de gestion des frais de 30%)."
 
-    if re.search(r'<meta[^>]*property=["\']og:title["\']', html, re.IGNORECASE):
-        seo_score += 10
-        breakdown.append("+10: OpenGraph social media sharing active")
-    else:
-        breakdown.append("+0: Missing OpenGraph metadata tags")
-    score += seo_score
+    report_content = f"""### [Indice de Confiance B2B & Partenariat]
+* **Score Global :** `{total_score} / 100`
+* **Niveau de Risque :** {risk_level}
 
-    # Category 3: UX Fidelity & Micro-Interactions (25 pts)
-    ux_score = 0
-    if "custom-cursor" in html:
-        ux_score += 5
-        breakdown.append("+5: High-fidelity custom inertial cursor is active")
-    else:
-        breakdown.append("+0: Default standard browser cursor used")
+### Ventilation des Notes :
+* *Livrables Réels :* {reliability_pts}/30
+* *Sécurité & Risque :* {security_pts}/25
+* *Leadership & Équipe :* {teamwork_pts}/25
+* *Communication :* {comm_pts}/20
 
-    if "glitch-title" in html:
-        ux_score += 5
-        breakdown.append("+5: Theme-appropriate glitch text title effect active")
-    else:
-        breakdown.append("+0: Standard plain text headers used")
-
-    if "pixel-grid" in html and "animatePixels" in html:
-        ux_score += 10
-        breakdown.append("+10: Interactive scroll/mouse afro pixel grid active and dynamic")
-    else:
-        breakdown.append("+0: Missing interactive pixel scroller module")
-
-    if "contact-form" in html and "Envoi en cours" in html:
-        ux_score += 5
-        breakdown.append("+5: Working contact submission form simulator active")
-    else:
-        breakdown.append("+0: No operational contact validation active")
-    score += ux_score
-
-    # Category 4: Design Charter Consistency (20 pts)
-    charter_score = 0
-    if "#0B46B9".lower() in html.lower() and "#041A4E".lower() in html.lower():
-        charter_score += 10
-        breakdown.append("+10: Strict dual-cobalt palette colors respected (#0B46B9, #041A4E)")
-    else:
-        breakdown.append("+0: Colors drift away from visual charter specification")
-
-    if "IBM Plex Mono" in html and ("Anton" in html or "Oswald" in html):
-        charter_score += 10
-        breakdown.append("+10: Typographical rule alignment OK (IBM Plex Mono + Anton/Oswald headers)")
-    else:
-        breakdown.append("+0: Missing system fonts")
-    score += charter_score
-
-    # Build ASCII Bar
-    bar_len = 20
-    filled = int((score / max_score) * bar_len)
-    bar = "█" * filled + "░" * (bar_len - filled)
-
-    report_content = f"""# Indice de Confiance Portfolio (Trust Score Card)
-
-Ce rapport évalue le niveau de confiance technique et professionnel ("Trust Score") du portfolio pour un recruteur ou un client d'affaires (B2B/Freelance).
-
-## 🏆 Score Global
-```text
-Score : {score} / {max_score}
-[{bar}] ({score}%)
-```
-
-### Classification du profil :
-- **Score >= 90** : **PRO GRANDE CONFANCE (Silicon Valley Ready)** - Le profil est authentifié, professionnel, optimisé et captivant.
-- **Score 75-89** : **CONFANCE CRÉDIBLE** - Prêt pour une utilisation standard, quelques métadonnées à affiner.
-- **Score < 75** : **À AMÉLIORER** - Placeholders trop nombreux ou manque d'interactivité.
-
----
-
-## 📈 Détail du Calcul des Points
-
-{chr(10).join(f"- {b}" for b in breakdown)}
-
----
-*Généré par l'Agent Calculateur de Confiance le {os.popen('date').read().strip()}*
+### Analyse Commerciale :
+* **Ce qui inspire confiance :**
+{chr(10).join(f"  - {s}" for s in strengths)}
+* **Ce qui freine la vente :**
+{chr(10).join(f"  - {b}" for b in barriers) if barriers else "  - Aucun frein commercial majeur détecté."}
+* **Recommandation pour maximiser le ROI du Portfolio :**
+  {recommendation}
 """
-    
+
     os.makedirs("artifacts", exist_ok=True)
     report_path = "artifacts/trust_score.md"
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write(report_content)
-        
-    print(f"[AGENT TRUST CALCULATOR] Scoring completed. Score: {score}/100. Written to {report_path}")
-    return score
+
+    print(f"[TRUST-SCORE-AGENT] Scoring assessment complete. Score: {total_score}/100. Written to {report_path}")
+    return total_score
 
 if __name__ == "__main__":
     calculate_trust_score("index.html")

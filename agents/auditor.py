@@ -3,127 +3,90 @@ import os
 import re
 
 def run_audit(html_path, charter_path):
-    print("=== [AGENT AUDITOR] Starting Portfolio Audit ===")
+    print("=== [SV-AUDIT-AGENT] Starting Silicon Valley Technical Assessment ===")
     
     if not os.path.exists(html_path):
-        return {"error": f"index.html not found at {html_path}"}
+        return {"status": "NO-GO", "error": "index.html not found"}
         
     with open(html_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    charter_found = os.path.exists(charter_path)
-    charter_text = ""
-    if charter_found:
-        with open(charter_path, 'r', encoding='utf-8') as f:
-            charter_text = f.read()
+    # 1. Evaluate Metrics-First (Numbers with % or units)
+    metrics = re.findall(r'\b\d+(?:[\.,]\d+)?\s*(?:%|ms|users|utilisateurs|requêtes|req/s|Go|Mo|kb/s|s\b)', html, re.IGNORECASE)
+    has_metrics = len(metrics) > 0
 
-    # Metrics collections
-    findings = []
-    passed = []
-    
-    # 1. Silicon Valley standards check
-    sv_keywords = ["React", "NestJS", "TypeScript", "Node", "Docker", "Git", "API"]
-    found_keywords = [kw for kw in sv_keywords if kw.lower() in html.lower()]
-    if len(found_keywords) >= 4:
-        passed.append(f"Silicon Valley Tech Stack: Found {len(found_keywords)} key skills ({', '.join(found_keywords)}) in the portfolio.")
+    # 2. Evaluate Depth of the Stack (advanced patterns)
+    stack_keywords = ["react", "nestjs", "supabase", "prisma", "jwt", "postgresql"]
+    found_stack = [kw for kw in stack_keywords if kw.lower() in html.lower()]
+    stack_score = len(found_stack)
+
+    # 3. Evaluate Quality of Architecture (TDD, CI/CD, modularity)
+    arch_keywords = ["tdd", "jest", "tests", "maintenabilité", "ci/cd", "modulaire", "clean code"]
+    found_arch = [kw for kw in arch_keywords if kw.lower() in html.lower()]
+    arch_score = len(found_arch)
+
+    # 4. Evaluate System Complexity (NFC, sync, offline-first, hardware)
+    complex_keywords = ["nfc", "sync", "synchronisation", "temps réel", "offline-first", "analytics"]
+    found_complex = [kw for kw in complex_keywords if kw.lower() in html.lower()]
+    complex_score = len(found_complex)
+
+    # Determine Global Status
+    if not has_metrics or arch_score == 0:
+        global_status = "À AMÉLIORER"
+    elif stack_score >= 4 and complex_score >= 3 and has_metrics:
+        global_status = "GO"
     else:
-        findings.append(f"Silicon Valley Tech Stack: Missing standard SV keywords (Found only: {', '.join(found_keywords)}). Recommend highlighting React, NestJS, TypeScript more clearly.")
+        global_status = "À AMÉLIORER"
 
-    # 2. SEO & Social Metadata (Critical for SV recruiting)
-    og_meta = {
-        "og:title": r'<meta[^>]*property=["\']og:title["\']',
-        "og:description": r'<meta[^>]*property=["\']og:description["\']',
-        "og:image": r'<meta[^>]*property=["\']og:image["\']',
-        "og:url": r'<meta[^>]*property=["\']og:url["\']'
-    }
-    for tag, pattern in og_meta.items():
-        if not re.search(pattern, html, re.IGNORECASE):
-            findings.append(f"Social Media SEO: Missing {tag} meta tag. SV recruiters share links on Slack, Twitter, and LinkedIn; nice previews are essential.")
-        else:
-            passed.append(f"Social Media SEO: {tag} is present.")
+    # Analyze strengths and weaknesses
+    strengths = []
+    weaknesses = []
+    plan_action = []
 
-    # Twitter card tags
-    if not re.search(r'<meta[^>]*name=["\']twitter:card["\']', html, re.IGNORECASE):
-        findings.append("Social Media SEO: Missing twitter:card metadata.")
+    if stack_score >= 4:
+        strengths.append(f"Excellente largeur de la stack technique moderne (React, NestJS, Supabase/PostgreSql).")
     else:
-        passed.append("Social Media SEO: twitter:card metadata is present.")
+        weaknesses.append("Stack technique trop superficielle ou manque d'outils avancés.")
 
-    # Description tag
-    if not re.search(r'<meta[^>]*name=["\']description["\']', html, re.IGNORECASE):
-        findings.append("SEO: General page meta description is missing.")
+    if found_complex:
+        strengths.append(f"Preuve d'intégration matérielle et de complexité système réelle (NFC/Scan, profiles dynamiques).")
     else:
-        passed.append("SEO: Meta description tag is present.")
+        weaknesses.append("Projets à faible complexité algorithmique ou système (ressemble à des clones d'école).")
 
-    # 3. Design System Alignment
-    # Check color variable references in CSS
-    colors = ["#0B46B9", "#041A4E", "#FFFFFF"]
-    charter_colors_ok = True
-    for c in colors:
-        if c.lower() not in html.lower() and c.upper() not in html.lower():
-            charter_colors_ok = False
-            findings.append(f"Design System: Strict hex color {c} not found in index.html.")
-    if charter_colors_ok:
-        passed.append("Design System: Strict hex colors match the design charter (#0B46B9, #041A4E, #FFFFFF).")
-
-    # 4. Accessibility (A11y)
-    # Check for empty alt attributes or missing aria-labels
-    imgs_without_alt = re.findall(r'<img(?!.*?alt=)[^>]*>', html)
-    if imgs_without_alt:
-        findings.append(f"Accessibility: Found {len(imgs_without_alt)} images missing standard 'alt' tags.")
+    if has_metrics:
+        strengths.append(f"Preuves d'impact quantifiables détectées ({len(metrics)} métriques trouvées).")
     else:
-        passed.append("Accessibility: All image tags have 'alt' attributes or proper alternative text labels.")
-        
-    aria_labels = re.findall(r'aria-label=', html)
-    if len(aria_labels) < 5:
-        findings.append(f"Accessibility: Low usage of aria-labels ({len(aria_labels)} found). SV accessibility rules demand high-fidelity labels on buttons and links.")
-    else:
-        passed.append(f"Accessibility: Good aria-label coverage ({len(aria_labels)} labels found).")
+        weaknesses.append("Absence de métriques chiffrées (pas de preuves d'optimisation de latence, de taux de réussite, ou d'uptime).")
+        plan_action.append("Ajouter des métriques de performance chiffrées pour le projet minds3o (ex: 'Réduction de 40% du temps de chargement initial').")
 
-    # 5. Performance Check
-    # Inline style block size check
-    style_size = len(re.findall(r'<style>(.*?)</style>', html, re.DOTALL))
-    if style_size > 0:
-        passed.append("Performance: Single unified index.html style block is active (reducing extra roundtrip network requests).")
-    
-    # Check for standard SV favicons
-    if not re.search(r'<link[^>]*rel=["\'](shortcut )?icon["\']', html, re.IGNORECASE):
-        findings.append("Identity: No favicon link defined in document head.")
-    else:
-        passed.append("Identity: Favicon link found.")
+    if arch_score == 0:
+        weaknesses.append("Aucune mention de tests automatisés (TDD, Jest), de workflows CI/CD ou d'architecture modulaire.")
+        plan_action.append("Spécifier l'utilisation du TDD (Jest) et l'intégration de pipelines CI/CD dans le descriptif de l'application Notes de Frais.")
 
-    # Write report
-    report_content = f"""# Rapport d'Audit de l'Agent Auditeur
+    # Fill default actions if empty
+    if not plan_action:
+        plan_action.append("Ajouter des détails sur la gestion du cache Redis pour optimiser les appels API NestJS.")
+        plan_action.append("Détailler l'architecture Event-Driven (Websockets) utilisée dans la synchronisation NFC.")
+    if len(plan_action) < 3:
+        plan_action.append("Détailler l'implémentation de la conformité RGPD/chiffrement dans la base Supabase/PostgreSQL.")
 
-Ce rapport vérifie l'adéquation du portfolio de Gil Kante pour soumission auprès d'entreprises et recruteurs de la Silicon Valley.
-
-## 📊 Résumé Exécutif
-- **Statut de conformité** : {"⚠️ AVERTISSEMENT - RECOMMANDÉ D'AJUSTER" if findings else "✅ PRÊT À SOUMETTRE"}
-- **Critères Validés** : {len(passed)}
-- **Améliorations Requises** : {len(findings)}
-
----
-
-## 🔍 Points d'Audit Requis / Améliorations
-
-{chr(10).join(f"- [ ] **{f}**" for f in findings) if findings else "Aucun problème détecté. Le portfolio est optimal !"}
-
----
-
-## ✅ Points Validés avec Succès
-
-{chr(10).join(f"- [x] {p}" for p in passed)}
-
----
-*Généré par l'Agent Profil Auditeur le {os.popen('date').read().strip()}*
+    report_content = f"""### [Rapport d'Audit - Candidature Silicon Valley]
+* **Statut Global :** {global_status}
+* **Points Forts (Hard Tech) :**
+{chr(10).join(f"  - {s}" for s in strengths)}
+* **Faiblesses Critiques (Bloquants SV) :**
+{chr(10).join(f"  - {w}" for w in weaknesses) if weaknesses else "  - Aucune faiblesse bloquante identifiée."}
+* **Plan d'Action Immédiat :**
+{chr(10).join(f"  - {p}" for p in plan_action)}
 """
-    
+
     os.makedirs("artifacts", exist_ok=True)
     report_path = "artifacts/audit_report.md"
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write(report_content)
-        
-    print(f"[AGENT AUDITOR] Audit completed successfully. Report written to {report_path}")
-    return {"findings": len(findings), "passed": len(passed)}
+
+    print(f"[SV-AUDIT-AGENT] Assessment complete. Status: {global_status}. Written to {report_path}")
+    return {"status": global_status, "strengths": strengths, "weaknesses": weaknesses, "plan_action": plan_action}
 
 if __name__ == "__main__":
     run_audit("index.html", "charte_design_portfolio.md")
